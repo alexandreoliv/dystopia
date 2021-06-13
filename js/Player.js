@@ -2,7 +2,7 @@ class Player {
 	constructor() {
 		this.velocity = 0;
 		this.gravity = 0.2;
-		this.width = 100;
+		this.width = 78;
 		this.height = 140;
 		this.x = 0;
 		this.y = height - this.height;
@@ -29,7 +29,7 @@ class Player {
 		if (this.x > 0) { // if the player is not at the edge
 		  this.x -= 10;
 		}
-	  }
+	}
 	
 	moveRight() {
 	if (this.x < 1216 - this.width) { // if the player is not at the edge
