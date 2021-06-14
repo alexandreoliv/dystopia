@@ -16,13 +16,13 @@ class Game {
 
 	preload() {
 		this.backgroundImages = [
-			{ src: loadImage('/assets/background-far-buildings.png'), x: 0, speed: 0.5 },
-			{ src: loadImage('/assets/background-back-buildings.png'), x: 0, speed: 1 },
-			{ src: loadImage('/assets/background-foreground.png'), x: 0, speed: 1.5 }
+			{ src: loadImage('assets/background-far-buildings.png'), x: 0, speed: 0.5 },
+			{ src: loadImage('assets/background-back-buildings.png'), x: 0, speed: 1 },
+			{ src: loadImage('assets/background-foreground.png'), x: 0, speed: 1.5 }
 		];
-		this.playerImage = loadImage('/assets/player-run.gif');
-		this.obstacleImage = loadImage('/assets/obstacles-box-idle.png');
-		this.trapImage = loadImage('/assets/trap.png');
+		this.playerImage = loadImage('assets/player-run.gif');
+		this.obstacleImage = loadImage('assets/obstacles-box-idle.png');
+		this.trapImage = loadImage('assets/trap.png');
 	}
 
 	draw() {
