@@ -9,14 +9,17 @@ class Game {
 		this.barrel = new Barrel(700);
 		this.items = [];
 		this.saws = [];
+		this.levelElement = document.getElementById('level');
+		this.livesElement = document.getElementById('lives');
 		this.healthElement = document.getElementById('health');
 		this.scoreElement = document.getElementById('score');
-		this.lifeElement = document.getElementById('lives');
 		this.timeElement = document.getElementById('time');
+		this.level = 1;
+		this.lives = 3;
 		this.health = 100;
 		this.score = 0;
-		this.life = 3;
 		this.time = 60;
+		this.frames = 90;
 	}
 
 	preload() {
@@ -56,10 +59,20 @@ class Game {
 	}
 
 	draw() {
-		if (this.player.x + this.player.width < 0 || this.health <= 0)
+		//if (this.player.x + this.player.width < 0 || this.health <= 0)
+		if (this.lives === 0)
 			this.gameOver();
-		else
+		else {
+			if (this.time === 0) {
+				this.level++;
+				this.levelElement.textContent = this.level;
+				//console.log("frames before: " + this.frames)
+				this.frames -= 10;
+				//console.log("frames after: " + this.frames)
+				this.time = 60;
+			}
 			this.gameOn();
+		}
 	}
 
 	gameOn() {
@@ -68,15 +81,15 @@ class Game {
 		this.barrel.draw();
 		this.player.draw();
 
-		if (frameCount % 90 === 0) { // draws a new item every 60 frames
+		if (frameCount % this.frames === 0) { // draws a new item every x frames
 			this.items.push(new Item(random(this.itemImages)));
 		}
 
-		if (frameCount % 100 === 0) { // draws a new saw every 120 frames
+		if (frameCount % this.frames === 0) { // draws a new saw every x frames
 			this.saws.push(new Saw(this.sawImage));
 		}
 		
-		if (frameCount % 100 === 0) { // time decreases
+		if (frameCount % 10 === 0) { // time decreases ----------- show be frameCounter % 100 when the game is ready
 			this.time -= 1;
 			this.timeElement.textContent = this.time;
 		}
@@ -95,12 +108,12 @@ class Game {
 		this.items = this.items.filter(item => {
 			if (item.collision(this.player || (item.x + item.width) < 0)) { // there's a collision
 				this.score += item.score;
-				this.life += item.life;
+				this.lives += item.life;
 				if (this.health + item.health > 100) this.health = 100;
 				else this.health += item.health;
 				this.scoreElement.textContent = this.score;
 				this.healthElement.textContent = this.health;
-				this.lifeElement.textContent = this.life;
+				this.livesElement.textContent = this.lives;
 				return false;
 			} else {
 				return true;
@@ -117,6 +130,15 @@ class Game {
 				return true;
 			}
 		})
+
+		//console.log(this.lives)
+		if (this.player.x + this.player.width < 0 || this.health <= 0) { // player died either by lack of health or by exiting the screen on the left
+			this.player.x = game.barrel.width; // moves player after the barrel
+			this.lives--; // one life is lost
+			this.health = 100; // restores full health
+			this.livesElement.textContent = this.lives; // updates lives
+			this.healthElement.textContent = this.health; // updated health
+		}
 
 		if (keyIsDown(RIGHT_ARROW)) {
 			// moves the player to the right
