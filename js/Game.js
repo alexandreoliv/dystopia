@@ -7,7 +7,7 @@ class Game {
 		this.player = new Player();
 		this.background = new Background();
 		this.barrel = new Barrel(700);
-		this.boxes = [];
+		this.items = [];
 		this.saws = [];
 		this.healthElement = document.getElementById('health');
 		this.scoreElement = document.getElementById('score');
@@ -22,7 +22,30 @@ class Game {
 			{ src: loadImage('assets/background-foreground.png'), x: 0, speed: 1.5 }
 		];
 		this.playerImage = loadImage('assets/player-run.gif');
-		this.boxImage = loadImage('assets/box.png');
+		this.itemImages = [
+			{ src: loadImage('assets/box.png'), name: 'box', width: 28*2, height: 24*2 },
+			{ src: loadImage('assets/box.png'), name: 'box', width: 28*2, height: 24*2 },
+			{ src: loadImage('assets/box.png'), name: 'box', width: 28*2, height: 24*2 },
+			{ src: loadImage('assets/box.png'), name: 'box', width: 28*2, height: 24*2 },
+			{ src: loadImage('assets/box.png'), name: 'box', width: 28*2, height: 24*2 },
+			{ src: loadImage('assets/box.png'), name: 'box', width: 28*2, height: 24*2 },
+			{ src: loadImage('assets/box.png'), name: 'box', width: 28*2, height: 24*2 },
+			{ src: loadImage('assets/box.png'), name: 'box', width: 28*2, height: 24*2 },
+			{ src: loadImage('assets/pizza.png'), name: 'pizza', width: 3072/60, height: 3072/60 },
+			{ src: loadImage('assets/pizza.png'), name: 'pizza', width: 3072/60, height: 3072/60 },
+			{ src: loadImage('assets/pizza.png'), name: 'pizza', width: 3072/60, height: 3072/60 },
+			{ src: loadImage('assets/pizza.png'), name: 'pizza', width: 3072/60, height: 3072/60 },
+			{ src: loadImage('assets/pizza.png'), name: 'pizza', width: 3072/60, height: 3072/60 },
+			{ src: loadImage('assets/pizza.png'), name: 'pizza', width: 3072/60, height: 3072/60 },
+			{ src: loadImage('assets/coffee.png'), name: 'coffee', width: 15*4, height: 10*4 },
+			{ src: loadImage('assets/coffee.png'), name: 'coffee', width: 15*4, height: 10*4 },
+			{ src: loadImage('assets/coffee.png'), name: 'coffee', width: 15*4, height: 10*4 },
+			{ src: loadImage('assets/coffee.png'), name: 'coffee', width: 15*4, height: 10*4 },
+			{ src: loadImage('assets/coffee.png'), name: 'coffee', width: 15*4, height: 10*4 },
+			{ src: loadImage('assets/coffee.png'), name: 'coffee', width: 15*4, height: 10*4 },
+			{ src: loadImage('assets/coffee.png'), name: 'coffee', width: 15*4, height: 10*4 },
+			{ src: loadImage('assets/heart.png'), name: 'heart', width: 416/10, height: 416/10 }
+		];
 		this.sawImage = loadImage('assets/saw.png');
 		this.barrelImage = loadImage('assets/barrel.png');
 	}
@@ -40,8 +63,8 @@ class Game {
 		this.barrel.draw();
 		this.player.draw();
 
-		if (frameCount % 60 === 0) { // draws a new box every 60 frames
-			this.boxes.push(new Box(this.boxImage));
+		if (frameCount % 90 === 0) { // draws a new item every 60 frames
+			this.items.push(new Item(random(this.itemImages)));
 		}
 
 		if (frameCount % 120 === 0) { // draws a new saw every 120 frames
@@ -49,8 +72,8 @@ class Game {
 		}
 		
 		// draws each obstacle on the canvas
-		this.boxes.forEach(function (box) {
-			box.draw();
+		this.items.forEach(function (item) {
+			item.draw();
 		})
 		
 		// draws each trap on the canvas
@@ -59,8 +82,8 @@ class Game {
 		})
 
 		// in case there's a collision, removes the obstacle from the screen
-		this.boxes = this.boxes.filter(box => {
-			if (box.collision(this.player || (box.x + box.width) < 0)) { // there's a collision
+		this.items = this.items.filter(item => {
+			if (item.collision(this.player || (item.x + item.width) < 0)) { // there's a collision
 				this.score += 10;
 				this.scoreElement.textContent = this.score;
 				return false;
