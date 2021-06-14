@@ -6,8 +6,9 @@ class Game {
 	setup() {
 		this.player = new Player();
 		this.background = new Background();
-		this.obstacles = [];
-		this.traps = [];
+		this.barrel = new Barrel(700);
+		this.boxes = [];
+		this.saws = [];
 		this.healthElement = document.getElementById('health');
 		this.scoreElement = document.getElementById('score');
 		this.health = 100;
@@ -21,35 +22,41 @@ class Game {
 			{ src: loadImage('assets/background-foreground.png'), x: 0, speed: 1.5 }
 		];
 		this.playerImage = loadImage('assets/player-run.gif');
-		this.obstacleImage = loadImage('assets/obstacles-box-idle.png');
-		this.trapImage = loadImage('assets/trap.png');
+		this.boxImage = loadImage('assets/box.png');
+		this.sawImage = loadImage('assets/saw.png');
+		this.barrelImage = loadImage('assets/barrel.png');
 	}
 
 	draw() {
 		clear();
 		this.background.draw();
+		this.barrel.draw();
 		this.player.draw();
-		if (frameCount % 60 === 0) { // draws a new obstacle every 60 frames
-			this.obstacles.push(new Obstacle(this.obstacleImage));
+
+		if (frameCount % 60 === 0) { // draws a new box every 60 frames
+			this.boxes.push(new Box(this.boxImage));
 		}
 
-		if (frameCount % 120 === 0) { // draws a new trap every 120 frames
-			this.traps.push(new Trap(this.trapImage));
+		if (frameCount % 120 === 0) { // draws a new saw every 120 frames
+			this.saws.push(new Saw(this.sawImage));
 		}
 		
 		// draws each obstacle on the canvas
-		this.obstacles.forEach(function (obstacle) {
-			obstacle.draw();
+		this.boxes.forEach(function (box) {
+			box.draw();
 		})
 		
 		// draws each trap on the canvas
-		this.traps.forEach(function (trap) {
-			trap.draw();
+		this.saws.forEach(function (saw) {
+			saw.draw();
 		})
 
+		// check if there's collision with the barrel
+		// this.barrel.collision();
+
 		// in case there's a collision, removes the obstacle from the screen
-		this.obstacles = this.obstacles.filter(obstacle => {
-			if (obstacle.collision(this.player || (obstacle.x + obstacle.width) < 0)) { // there's a collision
+		this.boxes = this.boxes.filter(box => {
+			if (box.collision(this.player || (box.x + box.width) < 0)) { // there's a collision
 				this.scoreElement.textContent = Number(this.scoreElement.textContent) + 10;
 				return false;
 			} else {
@@ -58,8 +65,8 @@ class Game {
 		})
 
 		// in case there's a collision, removes the trap from the screen
-		this.traps = this.traps.filter(trap => {
-			if (trap.collision(this.player || (trap.x + trap.width) < 0)) { // there's a collision
+		this.saws = this.saws.filter(saw => {
+			if (saw.collision(this.player || (saw.x + saw.width) < 0)) { // there's a collision
 				this.healthElement.textContent -= 20;
 				return false;
 			} else {
