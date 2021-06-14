@@ -49,23 +49,22 @@ class Player {
 	}
 
 	runLeft() {
-		if (this.x > 0) { // if the player is not at the edge
-			this.x -= 30;
+		if (this.x - 15 > 0) { // if the player is not at the left edge
+			if (
+				(this.x < game.barrel.x || this.x - 15 > game.barrel.x + game.barrel.width) || // if the player is not too close to barrel
+				(this.y + this.height <= game.barrel.y) // player is above or on top of the barrel
+				)
+				this.x -= 15;
 		}
 	}
 	
 	runRight() {
 		if (this.x + 15 < 1216 - this.width) { // if the player is not at the right edge
-			//if (this.y === height - this.height) { // player is in the ground
-				if (
-					(this.x + this.width + 15 < game.barrel.x || this.x > game.barrel.x) || // if the player is not too close to barrel
-					(this.y + this.height <= game.barrel.y) // player is above or on top of the barrel
-					)
-					this.x += 15;
-			// else { // player is jumping
-			// 	if (this.x + this.width + 15 < game.barrel.x || this.x > game.barrel.x) // player is not too close to barrel1
-			// 		this.x += 10;
-			// }
+			if (
+				(this.x + this.width + 15 < game.barrel.x || this.x > game.barrel.x) || // if the player is not too close to barrel
+				(this.y + this.height <= game.barrel.y) // player is above or on top of the barrel
+				)
+				this.x += 15;
 		}
 	}
 }
