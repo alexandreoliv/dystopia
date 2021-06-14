@@ -2,10 +2,13 @@ class Item {
 	constructor(item) {
 		this.image = item.src;
 		this.name = item.name;
-		this.x = width;
-		this.y = (Math.random() * height) / 1.5;
+		this.health = item.health;
+		this.score = item.score;
+		this.life = item.life;
 		this.width = item.width;
 		this.height = item.height;
+		this.x = width;
+		this.y = (Math.random() * height) / 1.5;
 	}
 
 	collision(playerInfo) {

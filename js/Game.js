@@ -11,8 +11,12 @@ class Game {
 		this.saws = [];
 		this.healthElement = document.getElementById('health');
 		this.scoreElement = document.getElementById('score');
+		this.lifeElement = document.getElementById('lives');
+		this.timeElement = document.getElementById('time');
 		this.health = 100;
 		this.score = 0;
+		this.life = 3;
+		this.time = 60;
 	}
 
 	preload() {
@@ -24,20 +28,28 @@ class Game {
 		this.playerImage = loadImage('assets/player-run.gif');
 		this.itemImages = [
 			//{ src: loadImage('assets/box.png'), name: 'box', width: 28*2, height: 24*2 },
-			{ src: loadImage('assets/pizza.png'), name: 'pizza', width: 3072/60, height: 3072/60 },
-			{ src: loadImage('assets/pizza.png'), name: 'pizza', width: 3072/60, height: 3072/60 },
-			{ src: loadImage('assets/pizza.png'), name: 'pizza', width: 3072/60, height: 3072/60 },
-			{ src: loadImage('assets/pizza.png'), name: 'pizza', width: 3072/60, height: 3072/60 },
-			{ src: loadImage('assets/pizza.png'), name: 'pizza', width: 3072/60, height: 3072/60 },
-			{ src: loadImage('assets/pizza.png'), name: 'pizza', width: 3072/60, height: 3072/60 },
-			{ src: loadImage('assets/coffee.png'), name: 'coffee', width: 68, height: 47 },
-			{ src: loadImage('assets/coffee.png'), name: 'coffee', width: 68, height: 47 },
-			{ src: loadImage('assets/coffee.png'), name: 'coffee', width: 68, height: 47 },
-			{ src: loadImage('assets/coffee.png'), name: 'coffee', width: 68, height: 47 },
-			{ src: loadImage('assets/ak47.png'), name: 'ak47', width: 478/4, height: 206/4 },
-			{ src: loadImage('assets/pistol.png'), name: 'pistol', width: 184/3, height: 146/3 },
-			{ src: loadImage('assets/knife.png'), name: 'knife', width: 110/6, height: 404/6 },
-			{ src: loadImage('assets/chicken.png'), name: 'chicken', width: 31*2, height: 32*2 }
+			{ src: loadImage('assets/pizza.png'), name: 'pizza', health: 15, score: 0, life: 0, width: 3072/60, height: 3072/60 },
+			{ src: loadImage('assets/pizza.png'), name: 'pizza', health: 15, score: 0, life: 0, width: 3072/60, height: 3072/60 },
+			{ src: loadImage('assets/pizza.png'), name: 'pizza', health: 15, score: 0, life: 0, width: 3072/60, height: 3072/60 },
+			{ src: loadImage('assets/chicken.png'), name: 'chicken', health: 10, score: 0, life: 0, width: 31*2, height: 32*2 },
+			{ src: loadImage('assets/chicken.png'), name: 'chicken', health: 10, score: 0, life: 0, width: 31*2, height: 32*2 },
+			{ src: loadImage('assets/chicken.png'), name: 'chicken', health: 10, score: 0, life: 0, width: 31*2, height: 32*2 },
+			{ src: loadImage('assets/chicken.png'), name: 'chicken', health: 10, score: 0, life: 0, width: 31*2, height: 32*2 },
+			{ src: loadImage('assets/coffee.png'), name: 'coffee', health: 5, score: 0, life: 0, width: 68, height: 47 },
+			{ src: loadImage('assets/coffee.png'), name: 'coffee', health: 5, score: 0, life: 0, width: 68, height: 47 },
+			{ src: loadImage('assets/coffee.png'), name: 'coffee', health: 5, score: 0, life: 0, width: 68, height: 47 },
+			{ src: loadImage('assets/coffee.png'), name: 'coffee', health: 5, score: 0, life: 0, width: 68, height: 47 },
+			{ src: loadImage('assets/coffee.png'), name: 'coffee', health: 5, score: 0, life: 0, width: 68, height: 47 },
+			{ src: loadImage('assets/heart.png'), name: 'heart', health: 0, score: 0, life: 1, width: 416/10, height: 416/10 },
+			{ src: loadImage('assets/ak47.png'), name: 'ak47', health: 0, score: 30, life: 0, width: 478/4, height: 206/4 },
+			{ src: loadImage('assets/ak47.png'), name: 'ak47', health: 0, score: 30, life: 0, width: 478/4, height: 206/4 },
+			{ src: loadImage('assets/pistol.png'), name: 'pistol', health: 0, score: 15, life: 0, width: 184/3, height: 146/3 },
+			{ src: loadImage('assets/pistol.png'), name: 'pistol', health: 0, score: 15, life: 0, width: 184/3, height: 146/3 },
+			{ src: loadImage('assets/pistol.png'), name: 'pistol', health: 0, score: 15, life: 0, width: 184/3, height: 146/3 },
+			{ src: loadImage('assets/knife.png'), name: 'knife', health: 0, score: 5, life: 0, width: 110/6, height: 404/6 },
+			{ src: loadImage('assets/knife.png'), name: 'knife', health: 0, score: 5, life: 0, width: 110/6, height: 404/6 },
+			{ src: loadImage('assets/knife.png'), name: 'knife', health: 0, score: 5, life: 0, width: 110/6, height: 404/6 },
+			{ src: loadImage('assets/knife.png'), name: 'knife', health: 0, score: 5, life: 0, width: 110/6, height: 404/6 },
 		];
 		this.sawImage = loadImage('assets/saw.png');
 		this.barrelImage = loadImage('assets/barrel.png');
@@ -60,10 +72,15 @@ class Game {
 			this.items.push(new Item(random(this.itemImages)));
 		}
 
-		if (frameCount % 120 === 0) { // draws a new saw every 120 frames
+		if (frameCount % 100 === 0) { // draws a new saw every 120 frames
 			this.saws.push(new Saw(this.sawImage));
 		}
 		
+		if (frameCount % 100 === 0) { // time decreases
+			this.time -= 1;
+			this.timeElement.textContent = this.time;
+		}
+
 		// draws each obstacle on the canvas
 		this.items.forEach(function (item) {
 			item.draw();
@@ -77,8 +94,13 @@ class Game {
 		// in case there's a collision, removes the obstacle from the screen
 		this.items = this.items.filter(item => {
 			if (item.collision(this.player || (item.x + item.width) < 0)) { // there's a collision
-				this.score += 10;
+				this.score += item.score;
+				this.life += item.life;
+				if (this.health + item.health > 100) this.health = 100;
+				else this.health += item.health;
 				this.scoreElement.textContent = this.score;
+				this.healthElement.textContent = this.health;
+				this.lifeElement.textContent = this.life;
 				return false;
 			} else {
 				return true;
@@ -88,7 +110,7 @@ class Game {
 		// in case there's a collision, removes the trap from the screen
 		this.saws = this.saws.filter(saw => {
 			if (saw.collision(this.player || (saw.x + saw.width) < 0)) { // there's a collision
-				this.health -= 20;
+				this.health -= 25;
 				this.healthElement.textContent = this.health;
 				return false;
 			} else {
