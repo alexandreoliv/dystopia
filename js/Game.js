@@ -28,7 +28,14 @@ class Game {
 	}
 
 	draw() {
-		clear();
+		if (this.player.x + this.player.width < 0 || this.health <= 0)
+			this.gameOver();
+		else
+			this.gameOn();
+	}
+
+	gameOn() {
+		//clear();
 		this.background.draw();
 		this.barrel.draw();
 		this.player.draw();
@@ -51,13 +58,11 @@ class Game {
 			saw.draw();
 		})
 
-		// check if there's collision with the barrel
-		// this.barrel.collision();
-
 		// in case there's a collision, removes the obstacle from the screen
 		this.boxes = this.boxes.filter(box => {
 			if (box.collision(this.player || (box.x + box.width) < 0)) { // there's a collision
-				this.scoreElement.textContent = Number(this.scoreElement.textContent) + 10;
+				this.score += 10;
+				this.scoreElement.textContent = this.score;
 				return false;
 			} else {
 				return true;
@@ -67,7 +72,8 @@ class Game {
 		// in case there's a collision, removes the trap from the screen
 		this.saws = this.saws.filter(saw => {
 			if (saw.collision(this.player || (saw.x + saw.width) < 0)) { // there's a collision
-				this.healthElement.textContent -= 20;
+				this.health -= 20;
+				this.healthElement.textContent = this.health;
 				return false;
 			} else {
 				return true;
@@ -84,4 +90,9 @@ class Game {
 			this.player.runLeft();
 		}
 	}
+
+	gameOver() {
+		document.getElementById('info').innerHTML = '<h2>GAME</h2><h2>OVER</h2>';		
+	}
+
 }

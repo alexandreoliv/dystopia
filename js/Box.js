@@ -2,7 +2,7 @@ class Box {
 	constructor(image) {
 		this.image = image;
 		this.x = width;
-		this.y = (Math.random() * height) / 2.5;
+		this.y = (Math.random() * height) / 1.5;
 		this.width = 70;
 		this.height = 60;
 	}

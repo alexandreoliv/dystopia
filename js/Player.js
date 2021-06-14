@@ -14,38 +14,55 @@ class Player {
 		this.velocity += this.gravity;
 		
 		// if distance between barrel and player is 0, there's a collision
-		console.log("distance between player and barrel:" + (game.barrel.x - (this.x + this.width)))
-		if ((game.barrel.x - (this.x + this.width) < 1.5) &&
-			(game.barrel.x - (this.x + this.width) > 0) &&
-			(this.y + this.height >= game.barrel.y)) {
-				this.x -= 1.5;
+		if (this.collision()) {
+			//console.log(`collision. player x+width: ${this.x + this.width}, barrel x: ${game.barrel.x}`)
+			this.x -= 1.5;
 		}
 
-		// if the player falls in a barrel, it should stay on top of it
-		if (
-			(this.x + this.width > game.barrel.x) && // player is after or exactly at the beginning of the barrel
-			(this.x <= game.barrel.x + game.barrel.width) // player is before of exactly at the end of the barrel
-		   &&
-			(this.y + this.height === game.barrel.y) // player is on top of the barrel
-		   ) {
-			//this.y = game.barrel.y - this.height;
-			this.x += 1.5;
-		} else {
-			this.y += this.velocity;
-		}
+		// gravity brings the player down, unless he's atop a barrel
+		if (!this.atopBarrel())
+			this.y += this.velocity; 
 
-		// if the player moves out of the screen on the bottom
-		if (this.y >= height - this.height) {
-			// we reset the y to its starting position
+		// if the player moves out of the screen on the bottom, his starting position is restored
+		if (this.y >= height - this.height)
 			this.y = height - this.height;
-		}
 
 		image(game.playerImage, this.x, this.y, this.width, this.height);
 	}
 
+	collision() {
+		if ((game.barrel.x - (this.x + this.width) < 1.5) && // player is approaching barrel
+			(game.barrel.x - (this.x + this.width) > 0) && // player is after barrel
+			(this.y + this.height >= game.barrel.y)) // player is not completely above barrel
+			return true;
+		return false;
+	}
+
+	atopBarrel() {
+		if (
+			(this.y + this.height === game.barrel.y) // player is vertically one the position of the barrel
+			&&
+			(this.x + this.width > game.barrel.x) // player is horizontally after or exactly at the beginning of the barrel
+			&&
+			(this.x <= game.barrel.x + game.barrel.width) // player is horizontally before of exactly at the end of the barrel
+		   ) {
+			//    console.log(`
+			//    player y+height: ${(this.y + this.height)},
+			//    player x: ${this.x},
+			//    player x+width: ${(this.x + this.width)},
+			//    barrel y: ${game.barrel.y},
+			//    barrel x: ${game.barrel.x},
+			//    barrel x+width: ${(game.barrel.x + game.barrel.width)}`);
+			return true; // player is atop the barrel
+		}
+		return false; // player is somewhere else
+	}
+
 	jump() {
-		if (this.y === height - this.height) // player is in the ground
+		if (this.y === height - this.height || this.atopBarrel()) {// player is in the ground or atop the barrel
+			console.log	(this.atopBarrel());
 			this.velocity = -10;
+		}
 	}
 
 	runLeft() {
