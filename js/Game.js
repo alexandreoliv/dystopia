@@ -23,28 +23,21 @@ class Game {
 		];
 		this.playerImage = loadImage('assets/player-run.gif');
 		this.itemImages = [
-			{ src: loadImage('assets/box.png'), name: 'box', width: 28*2, height: 24*2 },
-			{ src: loadImage('assets/box.png'), name: 'box', width: 28*2, height: 24*2 },
-			{ src: loadImage('assets/box.png'), name: 'box', width: 28*2, height: 24*2 },
-			{ src: loadImage('assets/box.png'), name: 'box', width: 28*2, height: 24*2 },
-			{ src: loadImage('assets/box.png'), name: 'box', width: 28*2, height: 24*2 },
-			{ src: loadImage('assets/box.png'), name: 'box', width: 28*2, height: 24*2 },
-			{ src: loadImage('assets/box.png'), name: 'box', width: 28*2, height: 24*2 },
-			{ src: loadImage('assets/box.png'), name: 'box', width: 28*2, height: 24*2 },
+			//{ src: loadImage('assets/box.png'), name: 'box', width: 28*2, height: 24*2 },
 			{ src: loadImage('assets/pizza.png'), name: 'pizza', width: 3072/60, height: 3072/60 },
 			{ src: loadImage('assets/pizza.png'), name: 'pizza', width: 3072/60, height: 3072/60 },
 			{ src: loadImage('assets/pizza.png'), name: 'pizza', width: 3072/60, height: 3072/60 },
 			{ src: loadImage('assets/pizza.png'), name: 'pizza', width: 3072/60, height: 3072/60 },
 			{ src: loadImage('assets/pizza.png'), name: 'pizza', width: 3072/60, height: 3072/60 },
 			{ src: loadImage('assets/pizza.png'), name: 'pizza', width: 3072/60, height: 3072/60 },
-			{ src: loadImage('assets/coffee.png'), name: 'coffee', width: 15*4, height: 10*4 },
-			{ src: loadImage('assets/coffee.png'), name: 'coffee', width: 15*4, height: 10*4 },
-			{ src: loadImage('assets/coffee.png'), name: 'coffee', width: 15*4, height: 10*4 },
-			{ src: loadImage('assets/coffee.png'), name: 'coffee', width: 15*4, height: 10*4 },
-			{ src: loadImage('assets/coffee.png'), name: 'coffee', width: 15*4, height: 10*4 },
-			{ src: loadImage('assets/coffee.png'), name: 'coffee', width: 15*4, height: 10*4 },
-			{ src: loadImage('assets/coffee.png'), name: 'coffee', width: 15*4, height: 10*4 },
-			{ src: loadImage('assets/heart.png'), name: 'heart', width: 416/10, height: 416/10 }
+			{ src: loadImage('assets/coffee.png'), name: 'coffee', width: 68, height: 47 },
+			{ src: loadImage('assets/coffee.png'), name: 'coffee', width: 68, height: 47 },
+			{ src: loadImage('assets/coffee.png'), name: 'coffee', width: 68, height: 47 },
+			{ src: loadImage('assets/coffee.png'), name: 'coffee', width: 68, height: 47 },
+			{ src: loadImage('assets/ak47.png'), name: 'ak47', width: 478/4, height: 206/4 },
+			{ src: loadImage('assets/pistol.png'), name: 'pistol', width: 184/3, height: 146/3 },
+			{ src: loadImage('assets/knife.png'), name: 'knife', width: 110/6, height: 404/6 },
+			{ src: loadImage('assets/chicken.png'), name: 'chicken', width: 31*2, height: 32*2 }
 		];
 		this.sawImage = loadImage('assets/saw.png');
 		this.barrelImage = loadImage('assets/barrel.png');
