@@ -1,7 +1,9 @@
 class Background {
-	draw() {
+	draw(level) {
 		game.backgroundImages.forEach(function (img) {
-			img.x -= img.speed;
+			if (level < 5)
+				img.x -= img.speed;
+
 			// first image
 			image(img.src, img.x, 0, width, height);
 			// second image, which is added right after the first
