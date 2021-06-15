@@ -66,22 +66,44 @@ class Player {
 	}
 
 	runLeft() {
-		if (this.x - 15 > 0) { // if the player is not at the left edge
-			if (
-				(this.x < game.barrel.x || this.x - 15 > game.barrel.x + game.barrel.width) || // if the player is not too close to barrel
-				(this.y + this.height <= game.barrel.y) // player is above or on top of the barrel
-				)
-				this.x -= 15;
+		if (game.level < 5) {
+			if (this.x - 15 > 0) { // if the player is not at the left edge
+				if (
+					(this.x < game.barrel.x || this.x - 15 > game.barrel.x + game.barrel.width) || // if the player is not too close to barrel
+					(this.y + this.height <= game.barrel.y) // player is above or on top of the barrel
+					)
+					this.x -= 15;
+			}
 		}
+		else { // Final stage
+			if (this.x - 15 > 0) { // if the player is not at the left edge
+				if (
+					(this.x < game.boss.x || this.x - 15 > game.boss.x + game.boss.width) || // if the player is not too close to the boss
+					(this.y + this.height <= game.boss.y) // player is above or on top of the boss
+					)
+					this.x -= 15;
+			}
+		}	
 	}
 	
 	runRight() {
-		if (this.x + 15 < 1216 - this.width) { // if the player is not at the right edge
-			if (
-				(this.x + this.width + 15 < game.barrel.x || this.x > game.barrel.x) || // if the player is not too close to barrel
-				(this.y + this.height <= game.barrel.y) // player is above or on top of the barrel
-				)
-				this.x += 15;
+		if (game.level < 5) {
+			if (this.x + 15 < 1216 - this.width) { // if the player is not at the right edge
+				if (
+					(this.x + this.width + 15 < game.barrel.x || this.x > game.barrel.x) || // if the player is not too close to barrel
+					(this.y + this.height <= game.barrel.y) // player is above or on top of the barrel
+					)
+					this.x += 15;
+			}
+		}
+		else { // Final stage
+			if (this.x + 15 < 1216 - this.width) { // if the player is not at the right edge
+				if (
+					(this.x + this.width + 15 < game.boss.x  || this.x > game.boss.x) || // if the player is not too close to the boss
+					(this.y + this.height <= game.boss.y) // player is above or on top of the boss
+					)
+					this.x += 15;
+			}
 		}
 	}
 }

@@ -26,4 +26,11 @@ function keyPressed() {
 		// jump
 		game.player.jump();
 	}
+
+	if (keyCode === 70) {
+		// go directly to the final stage
+		game.level = 4; // pretend it's the final second of level 4, so that all adjustments are done for the final stage
+		game.time = 0;
+		game.finalStage();
+	}
 }

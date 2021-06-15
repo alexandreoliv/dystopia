@@ -7,6 +7,7 @@ class Game {
 		this.player = new Player();
 		this.background = new Background();
 		this.barrel = new Barrel(700);
+		this.boss = new Boss;
 		this.items = [];
 		this.saws = [];
 		this.levelElement = document.getElementById('level');
@@ -55,16 +56,15 @@ class Game {
 		];
 		this.sawImage = loadImage('assets/saw.png');
 		this.barrelImage = loadImage('assets/barrel.png');
+		this.bossImage = loadImage('assets/boss.gif');
 	}
 
 	draw() {
 		//if (this.player.x + this.player.width < 0 || this.health <= 0)
 		if (this.lives === 0) // player has no more lives - end of the game
 			this.gameOver();
-		else if (this.level === 5) { // player has reached final level
-			this.player.x = 0; // brings player back to its original position
+		else if (this.level === 5)
 			this.finalStage();
-		}
 		else if (this.time === 0) { // a new level starts
 				this.level++;
 				this.levelElement.textContent = this.level;
@@ -72,6 +72,13 @@ class Game {
 				this.frames /= 2;
 				// console.log("frames after: " + this.frames)
 				this.time = 60;
+		
+				if (this.level === 5) { // player has reached final level
+					this.player.x = 0; // brings player back to its original position
+					//this.time = 100;
+					document.getElementById('info').removeChild(document.getElementById('h2-time')); // removes the time counter
+					this.playerImage = loadImage('assets/player-idle.gif');
+				}
 		}
 		else this.gameOn(); // player is playing the current level
 	}
@@ -95,7 +102,7 @@ class Game {
 			// console.log(this.saws)
 		}
 		
-		if (frameCount % 10 === 0) { // time decreases ----------- show be frameCounter % 100 when the game is ready
+		if (frameCount % 100 === 0) { // time decreases ----------- show be frameCounter % 100 when the game is ready
 			this.time -= 1;
 			this.timeElement.textContent = this.time;
 		}
@@ -182,10 +189,10 @@ class Game {
 	}
 
 	finalStage() {
-		document.getElementById('info').innerHTML = '<h2>FINAL</h2><h2>STAGE</h2>';
+		document.getElementById('div-level').innerHTML = '<h2>FINAL STAGE</h2>';
 		this.background.draw(this.level);
 		this.player.draw();
-
+		this.boss.draw();
 
 		if (frameCount % 10 === 0) { // time decreases ----------- show be frameCounter % 100 when the game is ready
 			this.time -= 1;
