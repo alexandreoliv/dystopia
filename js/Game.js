@@ -8,6 +8,7 @@ class Game {
 		this.background = new Background();
 		this.barrel = new Barrel(700);
 		this.boss = new Boss;
+		this.bullets = [];
 		this.items = [];
 		this.saws = [];
 		this.levelElement = document.getElementById('level');
@@ -58,6 +59,7 @@ class Game {
 		this.barrelImage = loadImage('assets/barrel.png');
 		this.bossImage = loadImage('assets/boss.gif');
 		this.rifleImage = loadImage('assets/rifle.gif');
+		this.bulletImage = loadImage('assets/bullet.png');
 	}
 
 	draw() {
@@ -75,7 +77,7 @@ class Game {
 				this.time = 60;
 		
 				if (this.level === 5) { // player has reached final level
-					this.player.x = 0; // brings player back to its original position
+					this.player.x = 50; // brings player back to its original position
 					//this.time = 100;
 					document.getElementById('info').removeChild(document.getElementById('h2-time')); // removes the time counter
 					this.playerImage = loadImage('assets/player-idle.gif');
@@ -108,12 +110,12 @@ class Game {
 			this.timeElement.textContent = this.time;
 		}
 
-		// draws each obstacle on the canvas
+		// draws each item on the canvas
 		this.items.forEach(function (item) {
 			item.draw();
 		})
 		
-		// draws each trap on the canvas
+		// draws each saw on the canvas
 		this.saws.forEach(function (saw) {
 			saw.draw();
 		})
@@ -208,6 +210,35 @@ class Game {
 			this.healthElement.textContent = this.health; // updated health
 		}
 
+		if (frameCount % Math.floor(random(80,160)) === 0) { // draws a new bullet every x frames
+			game.bullets.push(new Bullet(game.bulletImage));
+		}
+		
+		// draws each bullet on the canvas
+		this.bullets.forEach(function (bullet) {
+			bullet.draw();
+		})
+
+		// in case there's a collision, removes the bullet from the screen
+		this.bullets = this.bullets.filter(bullet => {
+			// let isCollision = saw.collision(this.player);
+			// if (isCollision) console.log(`collision with saw`);
+			if (bullet.collision(this.player)) { // there's a collision
+				this.health -= 50;
+				this.healthElement.textContent = this.health;
+				return false;
+			} else {
+				return true;
+			}
+		})
+
+		// remove from the array the saws that have already left the screen
+		this.bullets = this.bullets.filter(bullet => {
+			if (bullet.x + bullet.width < 0) return false; // item has left the screen
+			else return true;
+		})
+
+		
 		if (keyIsDown(RIGHT_ARROW)) {
 			// moves the player to the right
 			this.player.runRight();
@@ -216,10 +247,6 @@ class Game {
 		if (keyIsDown(LEFT_ARROW)) {
 			// moves the player to the left
 			this.player.runLeft();
-		}
-
-		if (keyCode === 17) { // Ctrl / Strg key
-			this.boss.fight();
 		}
 	}
 }

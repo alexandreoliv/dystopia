@@ -2,19 +2,16 @@ class Boss {
 	constructor() {
 		this.width = 78;
 		this.height = 140;
-		this.x = width - this.width;
+		this.x = width - this.width - 50;
 		this.y = height - this.height;
-		this.rifle = false;
+		this.rifleWidth = 128;
+		this.rifleHeight = 48;
+		this.rifleX = this.x - this.rifleWidth + 15;
+		this.rifleY = this.y + 30;
 	}
 
 	draw() {
 		image(game.bossImage, this.x, this.y, this.width, this.height);
-		if (this.rifle)
-			image(game.rifleImage, this.x - 128 + 15, this.y + 30, 128, 48);
-	}
-
-	fight() {
-		//game.bossImage = loadImage('assets/boss-fight.png');
-		this.rifle = true;
+		image(game.rifleImage, this.rifleX, this.rifleY, this.rifleWidth, this.rifleHeight);
 	}
 }
