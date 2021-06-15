@@ -8,7 +8,7 @@ class Item {
 		this.width = item.width;
 		this.height = item.height;
 		this.x = width;
-		this.y = (Math.random() * height) / 1.5;
+		this.y = random(300, height - 100);
 	}
 
 	collision(playerInfo) {

@@ -57,6 +57,7 @@ class Game {
 		this.sawImage = loadImage('assets/saw.png');
 		this.barrelImage = loadImage('assets/barrel.png');
 		this.bossImage = loadImage('assets/boss.gif');
+		this.rifleImage = loadImage('assets/rifle.gif');
 	}
 
 	draw() {
@@ -90,13 +91,13 @@ class Game {
 		this.player.draw();
 
 		//console.log(frameCount)
-		if (frameCount % this.frames === 0) { // draws a new item every x frames
+		if (frameCount % 200 === 0) { // draws a new item every x frames
 			this.items.push(new Item(random(this.itemImages)));
-			// console.log("New item" + " on frame " + frameCount);
+			console.log("New item" + " on y " + this.items[this.items.length - 1].y);
 			// console.log(this.items)
 		}
 
-		if (frameCount % this.frames === 0) { // draws a new saw every x frames
+		if (frameCount % this.frames < 1 ) { // draws a new saw every x frames
 			this.saws.push(new Saw(this.sawImage));
 			// console.log("New saw" + " on frame " + frameCount);
 			// console.log(this.saws)
@@ -146,7 +147,7 @@ class Game {
 			// let isCollision = saw.collision(this.player);
 			// if (isCollision) console.log(`collision with saw`);
 			if (saw.collision(this.player)) { // there's a collision
-				this.health -= 30;
+				this.health -= 50;
 				this.healthElement.textContent = this.health;
 				return false;
 			} else {
@@ -215,6 +216,10 @@ class Game {
 		if (keyIsDown(LEFT_ARROW)) {
 			// moves the player to the left
 			this.player.runLeft();
+		}
+
+		if (keyCode === 17) { // Ctrl / Strg key
+			this.boss.fight();
 		}
 	}
 }
