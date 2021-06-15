@@ -95,7 +95,7 @@ class Game {
 		//console.log(frameCount)
 		if (frameCount % 200 === 0) { // draws a new item every x frames
 			this.items.push(new Item(random(this.itemImages)));
-			console.log("New item" + " on y " + this.items[this.items.length - 1].y);
+			// console.log("New item" + " on y " + this.items[this.items.length - 1].y);
 			// console.log(this.items)
 		}
 
@@ -175,6 +175,9 @@ class Game {
 			this.livesElement.textContent = this.lives; // updates lives
 			this.healthElement.textContent = this.health; // updated health
 		}
+
+		// console.log("is the player atop a barrel? " + this.player.atopBarrel())
+		this.player.atopBarrel();
 
 		if (keyIsDown(RIGHT_ARROW)) {
 			// moves the player to the right
