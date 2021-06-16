@@ -24,6 +24,7 @@ class Game {
 		this.time = 60;
 		this.frames = 100;
 		this.currentBossImage = this.bossImage;
+		this.audio.loop = true;
 	}
 
 	preload() {
@@ -64,6 +65,9 @@ class Game {
 		this.bossRifleImage = loadImage('assets/boss-rifle.gif');
 		this.bulletImage = loadImage('assets/boss-bullet.png');
 		this.playerRifleImage = loadImage('assets/player-rifle.gif');
+
+		this.music = createAudio('assets/music.wav');
+		this.audio = new Audio('assets/music.wav');
 	}
 
 	draw() {
@@ -198,6 +202,11 @@ class Game {
 		if (keyIsDown(LEFT_ARROW)) {
 			// moves the player to the left
 			this.player.runLeft();
+		}
+
+		if (keyCode === 83) { // s
+			//this.music.play();
+			this.audio.play();
 		}
 	}
 

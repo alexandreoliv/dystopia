@@ -30,4 +30,8 @@ function keyPressed() {
 		// player is shooting
 		game.player.playerShooting();
 	}
+
+	// if (keyCode === 83) { // s
+	// 	game.song.play();	
+	// }
 }
