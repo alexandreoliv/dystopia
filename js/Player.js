@@ -91,6 +91,7 @@ class Player {
 	jump() {
 		if (this.y === height - this.height || this.atopBarrel()) { // player is in the ground or atop the barrel
 			//console.log	(this.atopBarrel());
+			game.jumpEffect.play();
 			this.velocity = -10;
 			this.y += this.velocity;
 			this.y = Number(this.y.toFixed(1));

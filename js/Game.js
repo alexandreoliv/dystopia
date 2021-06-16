@@ -66,8 +66,19 @@ class Game {
 		this.bulletImage = loadImage('assets/boss-bullet.png');
 		this.playerRifleImage = loadImage('assets/player-rifle.gif');
 
-		this.music = createAudio('assets/music.wav');
-		this.audio = new Audio('assets/music.wav');
+		//this.music = createAudio('assets/music.wav');
+		this.audio = new Audio('assets/sound/music.mp3'); // or music.wav (which is another song)
+		this.coffeeEffect = new Audio('assets/sound/coffee.wav');
+		this.deathEffect = new Audio('assets/sound/death.wav'); // or death2.wav (another effect)
+		this.eatEffect = new Audio('assets/sound/eat.wav');
+		this.gameOverEffect = new Audio('assets/sound/gameover.wav');
+		this.gunEffect = new Audio('assets/sound/gun.wav');
+		this.hurtEffect = new Audio('assets/sound/hurt.wav');
+		this.jumpEffect = new Audio('assets/sound/jump.wav');
+		this.levelUpEffect = new Audio('assets/sound/levelup.wav');
+		this.bossShootEfeect = new Audio('assets/sound/shoot-boss.wav');
+		this.playerShootEfeect = new Audio('assets/sound/shoot-player.wav');
+		this.youWinEffect = new Audio('assets/sound/youwin.wav');
 	}
 
 	draw() {
