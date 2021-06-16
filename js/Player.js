@@ -89,13 +89,15 @@ class Player {
 	}
 
 	jump() {
-		if (this.y === height - this.height || this.atopBarrel()) { // player is in the ground or atop the barrel
-			//console.log	(this.atopBarrel());
-			game.jumpEffect.play();
-			this.velocity = -10;
-			this.y += this.velocity;
-			this.y = Number(this.y.toFixed(1));
-			//console.log("Jumping! Velocity: " + this.velocity + " Player Y + height: " + (this.y + this.height) + " Barrel Y: " + game.barrel.y)
+		if (game.lives > 0) { // without this, player would still be able to jump (and make sounds) after the game over
+			if (this.y === height - this.height || this.atopBarrel()) { // player is in the ground or atop the barrel
+				//console.log	(this.atopBarrel());
+				game.jumpEffect.play();
+				this.velocity = -10;
+				this.y += this.velocity;
+				this.y = Number(this.y.toFixed(1));
+				//console.log("Jumping! Velocity: " + this.velocity + " Player Y + height: " + (this.y + this.height) + " Barrel Y: " + game.barrel.y)
+			}
 		}
 	}
 
@@ -135,5 +137,6 @@ class Player {
 
 	playerShooting() {
 		game.bulletsPlayer.push(new Bullet(game.bulletImage, (this.rifleX + this.rifleWidth - 50), this.rifleY, 45, 21, 'right'));
+		game.playerShootEffect.play();
 	}
 }

@@ -24,7 +24,7 @@ class Game {
 		this.time = 60;
 		this.frames = 100;
 		this.currentBossImage = this.bossImage;
-		this.audio.loop = true;
+		this.backgroundMusic.loop = true;
 	}
 
 	preload() {
@@ -67,7 +67,7 @@ class Game {
 		this.playerRifleImage = loadImage('assets/player-rifle.gif');
 
 		//this.music = createAudio('assets/music.wav');
-		this.audio = new Audio('assets/sound/music.mp3'); // or music.wav (which is another song)
+		this.backgroundMusic = new Audio('assets/sound/music.mp3'); // or music.wav (which is another song)
 		this.coffeeEffect = new Audio('assets/sound/coffee.wav');
 		this.deathEffect = new Audio('assets/sound/death.wav'); // or death2.wav (another effect)
 		this.eatEffect = new Audio('assets/sound/eat.wav');
@@ -75,9 +75,10 @@ class Game {
 		this.gunEffect = new Audio('assets/sound/gun.wav');
 		this.hurtEffect = new Audio('assets/sound/hurt.wav');
 		this.jumpEffect = new Audio('assets/sound/jump.wav');
+		this.knifeEffect = new Audio('assets/sound/knife.wav');
 		this.levelUpEffect = new Audio('assets/sound/levelup.wav');
-		this.bossShootEfeect = new Audio('assets/sound/shoot-boss.wav');
-		this.playerShootEfeect = new Audio('assets/sound/shoot-player.wav');
+		this.bossShootEffect = new Audio('assets/sound/shoot-boss.wav');
+		this.playerShootEffect = new Audio('assets/sound/shoot-player.wav');
 		this.youWinEffect = new Audio('assets/sound/youwin.wav');
 	}
 
@@ -85,7 +86,7 @@ class Game {
 		//if (this.player.x + this.player.width < 0 || this.health <= 0)
 		if (this.boss.health <= 0) { // boss is dead
 			image(game.deadBossImage, this.x - 50, this.y, 63, 23);
-			this.youWon();
+			this.youWin();
 		}
 		if (this.lives === 0) // player has no more lives - end of the game
 			this.gameOver();
@@ -158,6 +159,12 @@ class Game {
 				this.scoreElement.textContent = this.score;
 				this.healthElement.textContent = this.health;
 				this.livesElement.textContent = this.lives;
+				if (item.name === 'coffee') this.coffeeEffect.play();
+				else if (item.name === 'pizza' || item.name ==='chicken') this.eatEffect.play();
+				else if (item.name === 'heart') this.levelUpEffect.play();
+				else if (item.name === 'knife') this.knifeEffect.play();
+				else this.gunEffect.play();
+
 				return false;
 			} else {
 				return true;
@@ -177,6 +184,7 @@ class Game {
 			if (saw.collision(this.player)) { // there's a collision
 				this.health -= 50;
 				this.healthElement.textContent = this.health;
+				this.hurtEffect.play();
 				return false;
 			} else {
 				return true;
@@ -196,7 +204,9 @@ class Game {
 			else
 				this.player.x = 0; // moves player to its original position
 
+			console.log(this.lives)
 			this.lives--; // one life is lost
+			if (this.lives > 0) this.deathEffect.play(); // if the last life is lost there's no sound effect because it's also game over
 			this.health = 100; // restores full health
 			this.livesElement.textContent = this.lives; // updates lives
 			this.healthElement.textContent = this.health; // updated health
@@ -217,18 +227,22 @@ class Game {
 
 		if (keyCode === 83) { // s
 			//this.music.play();
-			this.audio.play();
+			this.backgroundMusic.play();
 		}
 	}
 
 	gameOver() {
 		document.getElementById('info').innerHTML = '<h2>GAME</h2><h2>OVER</h2>';
+		this.gameOverEffect.play();
+		this.backgroundMusic.pause();
 		noLoop();
 	}
 
-	youWon() {
+	youWin() {
 		document.getElementById('info').innerHTML = '<h2>YOU</h2><h2>WON</h2>';
 		this.boss.draw();
+		this.youWinEffect.play();
+		this.backgroundMusic.pause();
 		noLoop();
 	}
 
@@ -254,6 +268,7 @@ class Game {
 
 		if (frameCount % Math.floor(random(60,140)) === 0) { // draws a new bullet every x frames
 			game.bulletsBoss.push(new Bullet(game.bulletImage, (game.boss.x - 128 + 15), (game.boss.y + 35), 45, 21, 'left'));
+			this.bossShootEffect.play();
 		}
 		
 		// draws each boss bullet on the canvas

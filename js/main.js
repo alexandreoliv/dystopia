@@ -26,7 +26,7 @@ function keyPressed() {
 		game.finalStage();
 	}
 
-	if (keyCode === 17 && game.level === 5) { // Ctrl / Strg key
+	if (keyCode === 17 && game.level === 5 && game.lives > 0) { // Ctrl / Strg key
 		// player is shooting
 		game.player.playerShooting();
 	}
