@@ -5,8 +5,14 @@ class Player {
 		this.width = 78;
 		this.height = 140;
 		this.x = 0;
-		this.y = height - this.height;
-		// height is the height of the canvas (provided by p5.js)
+		this.y = height - this.height;	// height is the height of the canvas (provided by p5.js)
+		this.rifleWidth = 160;
+		this.rifleHeight = 32;
+		this.rifleX = this.x + this.width + this.rifleDistX;
+		this.rifleY = this.y + this.rifleDistY;
+		this.rifleDistX = -10; // distance between the rifle X and the player X
+		this.rifleDistY = 50; // distance between the rifle Y and the player Y
+
 	}
 
 	draw() {
@@ -34,13 +40,19 @@ class Player {
 		else { // final stage
 			this.y += this.velocity; // player will always fall down
 			this.y = Number(this.y.toFixed(1));
+			this.rifleY = this.y + this.rifleDistY; // rifle needs to move together with the player
 		}
 
 		// if the player moves out of the screen on the bottom, his starting position is restored
-		if (this.y >= height - this.height)
+		if (this.y >= height - this.height) {
 		 	this.y = height - this.height;
+			this.rifleY = this.y + this.rifleDistY; // rifle needs to move together with the player
+		}
 
 		image(game.playerImage, this.x, this.y, this.width, this.height);
+
+		if (game.level === 5)
+			image(game.playerRifleImage, this.rifleX, this.rifleY, this.rifleWidth, this.rifleHeight);
 	}
 
 	collision() {
@@ -97,8 +109,10 @@ class Player {
 			}
 		}
 		else // Final stage
-			if (this.x - 15 > 0) // if the player is not at the left edge
+			if (this.x - 15 > 0) { // if the player is not at the left edge
 				this.x -= 15;
+				this.rifleX = this.x + this.width + this.rifleDistX; // rifle needs to move together with the player
+			}
 	}
 	
 	runRight() {
@@ -112,7 +126,9 @@ class Player {
 			}
 		}
 		else // Final stage
-			if (this.x + this.width + 15 < game.boss.rifleX) // if the player is not too close to the rifle
+			if (this.x + this.width + 15 < game.boss.rifleX) { // if the player is not too close to the rifle
 				this.x += 15;
+				this.rifleX = this.x + this.width + this.rifleDistX; // rifle needs to move together with the player
+			}
 	}
 }

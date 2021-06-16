@@ -58,8 +58,9 @@ class Game {
 		this.sawImage = loadImage('assets/saw.png');
 		this.barrelImage = loadImage('assets/barrel.png');
 		this.bossImage = loadImage('assets/boss.gif');
-		this.rifleImage = loadImage('assets/rifle.gif');
-		this.bulletImage = loadImage('assets/bullet.png');
+		this.bossRifleImage = loadImage('assets/boss-rifle.gif');
+		this.bossBulletImage = loadImage('assets/boss-bullet.png');
+		this.playerRifleImage = loadImage('assets/player-rifle.gif');
 	}
 
 	draw() {
@@ -77,7 +78,8 @@ class Game {
 				this.time = 60;
 		
 				if (this.level === 5) { // player has reached final level
-					this.player.x = 50; // brings player back to its original position
+					this.player.x = 50; // brings player to the initial position
+					this.player.rifleX = this.player.x + this.player.width + this.player.rifleDistX; // rifle needs to move together with the player
 					//this.time = 100;
 					document.getElementById('info').removeChild(document.getElementById('h2-time')); // removes the time counter
 					this.playerImage = loadImage('assets/player-idle.gif');
@@ -206,7 +208,8 @@ class Game {
 		}
 
 		if (this.health <= 0) { // player died by lack of health
-			this.player.x = 0; // moves player to the beginning (left side) of the screen
+			this.player.x = 50; // brings player to the initial position
+			this.player.rifleX = this.player.x + this.player.width + this.player.rifleDistX; // rifle needs to move together with the player
 			this.lives--; // one life is lost
 			this.health = 100; // restores full health
 			this.livesElement.textContent = this.lives; // updates lives
@@ -214,7 +217,7 @@ class Game {
 		}
 
 		if (frameCount % Math.floor(random(80,160)) === 0) { // draws a new bullet every x frames
-			game.bullets.push(new Bullet(game.bulletImage));
+			game.bullets.push(new Bullet(game.bossBulletImage));
 		}
 		
 		// draws each bullet on the canvas

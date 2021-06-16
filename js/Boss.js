@@ -12,6 +12,6 @@ class Boss {
 
 	draw() {
 		image(game.bossImage, this.x, this.y, this.width, this.height);
-		image(game.rifleImage, this.rifleX, this.rifleY, this.rifleWidth, this.rifleHeight);
+		image(game.bossRifleImage, this.rifleX, this.rifleY, this.rifleWidth, this.rifleHeight);
 	}
 }
