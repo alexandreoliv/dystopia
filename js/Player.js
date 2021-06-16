@@ -1,6 +1,6 @@
 class Player {
 	constructor() {
-		this.velocity = -0.2; // as soon as the player is drawn, velocity will increase to 0 which should be the initial value so this works fine
+		this.velocity = 0; // as soon as the player is drawn, velocity will increase to 0 which should be the initial value so this works fine
 		this.gravity = 0.2;
 		this.width = 78;
 		this.height = 140;
@@ -12,7 +12,6 @@ class Player {
 		this.rifleY = this.y + this.rifleDistY;
 		this.rifleDistX = -10; // distance between the rifle X and the player X
 		this.rifleDistY = 50; // distance between the rifle Y and the player Y
-
 	}
 
 	draw() {

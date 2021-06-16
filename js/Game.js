@@ -83,32 +83,31 @@ class Game {
 	}
 
 	draw() {
-		//if (this.player.x + this.player.width < 0 || this.health <= 0)
-		if (this.boss.health <= 0) { // boss is dead
-			image(game.deadBossImage, this.x - 50, this.y, 63, 23);
+		if (this.boss.health === 0) // boss is dead
 			this.youWin();
-		}
+		
 		if (this.lives === 0) // player has no more lives - end of the game
 			this.gameOver();
-		else if (this.level === 5)
-			this.finalStage();
-		else if (this.time === 0) { // a new level starts
-				this.level++;
-				this.levelElement.textContent = this.level;
-				// console.log("frames before: " + this.frames)
-				this.frames /= 2;
-				// console.log("frames after: " + this.frames)
-				this.time = 60;
 		
-				if (this.level === 5) { // player has reached final level
-					this.player.x = 50; // brings player to the initial position
-					this.player.rifleX = this.player.x + this.player.width + this.player.rifleDistX; // rifle needs to move together with the player
-					//this.time = 100;
-					//document.getElementById('info').removeChild(document.getElementById('h2-time')); // removes the time counter
-					document.getElementById('h2-time').innerHTML = `Boss health: <span id="boss-health">${this.boss.health}</span>`;
-					//document.getElementById('time').textContent = this.boss.health;
-					this.playerImage = loadImage('assets/player-idle.gif');
-				}
+		if (this.level === 5)
+			this.finalStage();
+
+		else if (this.time === 0) { // a new level starts
+			this.level++;
+			this.levelElement.textContent = this.level;
+			// console.log("frames before: " + this.frames)
+			this.frames /= 2;
+			// console.log("frames after: " + this.frames)
+			this.time = 60;
+	
+			if (this.level === 5) { // player has reached final level
+				this.player.x = 50; // brings player to the initial position
+				this.player.rifleX = this.player.x + this.player.width + this.player.rifleDistX; // rifle needs to move together with the player
+				document.getElementById('div-level').innerHTML = '<h2>FINAL STAGE</h2>';
+				document.getElementById('h2-time').innerHTML = `Boss health: <span id="boss-health">${this.boss.health}</span>`;
+				//document.getElementById('time').textContent = this.boss.health;
+				this.playerImage = loadImage('assets/player-idle.gif');
+			}
 		}
 		else this.gameOn(); // player is playing the current level
 	}
@@ -198,22 +197,22 @@ class Game {
 		})
 
 		if (this.player.x + this.player.width < 0 || this.health <= 0) { // player died either by lack of health or by exiting the screen on the left
-			//console.log(game.barrel.x)
-			if (game.barrel.x === 1) // player killed by the barrel
-				this.player.x = game.barrel.width; // moves player after the barrel
-			else
-				this.player.x = 0; // moves player to its original position
-
-			console.log(this.lives)
 			this.lives--; // one life is lost
-			if (this.lives > 0) this.deathEffect.play(); // if the last life is lost there's no sound effect because it's also game over
-			this.health = 100; // restores full health
-			this.livesElement.textContent = this.lives; // updates lives
-			this.healthElement.textContent = this.health; // updated health
+			if (this.lives > 0) {
+				this.deathEffect.play(); // only when lives > 0 because when it's 0 there's no sound effect for death - because it's also game over
+				this.health = 100; // restores full health
+				this.livesElement.textContent = this.lives; // updates lives
+				this.healthElement.textContent = this.health; // updated health
+				//console.log(game.barrel.x)
+				if (game.barrel.x === 1) // player killed by the barrel
+					this.player.x = game.barrel.width; // moves player after the barrel
+				else
+					this.player.x = 0; // moves player to its original position
+			}
 		}
 
 		// console.log("is the player atop a barrel? " + this.player.atopBarrel())
-		this.player.atopBarrel();
+		//this.player.atopBarrel();
 
 		if (keyIsDown(RIGHT_ARROW)) {
 			// moves the player to the right
@@ -224,33 +223,37 @@ class Game {
 			// moves the player to the left
 			this.player.runLeft();
 		}
-
-		if (keyCode === 83) { // s
-			//this.music.play();
-			this.backgroundMusic.play();
-		}
 	}
 
 	gameOver() {
-		document.getElementById('info').innerHTML = '<h2>GAME</h2><h2>OVER</h2>';
+		document.getElementById('div-level').innerHTML = '<h2>GAME</h2><h2>OVER</h2>';
+		if (game.level === 1)
+			document.getElementById('info').innerHTML = `<h2>Final score: ${this.score} points x ${this.level} level = ${this.score * this.level}</h2>`;
+		else
+			document.getElementById('info').innerHTML = `<h2>Final score: ${this.score} points x ${this.level} levels = ${this.score * this.level}</h2>`;
 		this.gameOverEffect.play();
 		this.backgroundMusic.pause();
 		noLoop();
 	}
 
 	youWin() {
-		document.getElementById('info').innerHTML = '<h2>YOU</h2><h2>WON</h2>';
-		this.boss.draw();
+		document.getElementById('div-level').innerHTML = '<h2>YOU</h2><h2>WIN</h2>';
+		document.getElementById('info').innerHTML = `<h2>Final score: ${this.score * this.level} (points x levels) 
+		+ ${this.lives * 100 + this.health} (health + remaining lives) = ${this.score * this.level + this.lives * 100 + this.health}</h2>`;
+
+		//this.boss.draw();
 		this.youWinEffect.play();
 		this.backgroundMusic.pause();
 		noLoop();
 	}
 
 	finalStage() {
-		document.getElementById('div-level').innerHTML = '<h2>FINAL STAGE</h2>';
+		//console.log(this.level)
+		//document.getElementById('div-level').innerHTML = '<h2>FINAL STAGE</h2>';
 		this.background.draw(this.level);
 		this.player.draw();
 		this.boss.draw();
+		this.barrel.x = height; // removes barrel from screen so that player can't jump at the original position of the barrel
 
 		if (frameCount % 10 === 0) { // time decreases ----------- show be frameCounter % 100 when the game is ready
 			this.time -= 1;
@@ -261,6 +264,7 @@ class Game {
 			this.player.x = 50; // brings player to the initial position
 			this.player.rifleX = this.player.x + this.player.width + this.player.rifleDistX; // rifle needs to move together with the player
 			this.lives--; // one life is lost
+			if (this.lives > 0) this.deathEffect.play(); // if the last life is lost there's no sound effect because it's also game over
 			this.health = 100; // restores full health
 			this.livesElement.textContent = this.lives; // updates lives
 			this.healthElement.textContent = this.health; // updated health
@@ -280,36 +284,45 @@ class Game {
 			bullet.draw();
 		})
 
-		// in case there's a collision, removes the bullet from the screen
+		// in case there's a collision, removes the bullet from the boss from the screen
 		this.bulletsBoss = this.bulletsBoss.filter(bullet => {
 			// let isCollision = saw.collision(this.player);
 			// if (isCollision) console.log(`collision with saw`);
 			if (bullet.collision(this.player)) { // there's a collision
 				this.health -= 50;
 				this.healthElement.textContent = this.health;
+				this.hurtEffect.play();
 				return false;
 			} else {
 				return true;
 			}
 		})
 
-		// in case there's a collision, removes the bullet from the screen
+		// in case there's a collision, removes the bullet from the player from the screen
 		this.bulletsPlayer = this.bulletsPlayer.filter(bullet => {
 			// let isCollision = saw.collision(this.player);
 			// if (isCollision) console.log(`collision with saw`);
 			if (bullet.collision(this.boss)) { // there's a collision
-				console.log('Bullet has hit the boss');
+				//console.log('Bullet has hit the boss');
 				this.boss.health -= 1;
+				this.score += 5;
 				document.getElementById('boss-health').textContent = this.boss.health;
+				this.scoreElement.textContent = this.score;
 				return false;
 			} else {
 				return true;
 			}
 		})
 
-		// remove from the array the saws that have already left the screen
+		// remove from the array the bullets from the boss that have already left the screen
 		this.bulletsBoss = this.bulletsBoss.filter(bullet => {
-			if (bullet.x + bullet.width < 0) return false; // item has left the screen
+			if (bullet.x + bullet.width < 0) return false; // bullet has left the screen
+			else return true;
+		})
+
+		// remove from the array the bullets from the player that have already left the screen
+		this.bulletsPlayer = this.bulletsPlayer.filter(bullet => {
+			if (bullet.x > width ) return false; // bullet has left the screen
 			else return true;
 		})
 

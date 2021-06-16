@@ -7,7 +7,7 @@ body {
   background-color: #c8dad3;
 }
 
-#info {
+#info, #div-level {
   display: flex;
   justify-content: center;
 }
