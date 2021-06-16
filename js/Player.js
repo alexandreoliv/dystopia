@@ -20,7 +20,7 @@ class Player {
 			this.velocity += this.gravity;
 			this.velocity = Number(this.velocity.toFixed(1));
 		
-		console.log("Walking or falling down. Velocity: " + this.velocity + " Player Y + height: " + (this.y + this.height));
+		//console.log("Walking or falling down. Velocity: " + this.velocity + " Player Y + height: " + (this.y + this.height));
 
 		// if distance between barrel and player is 0, there's a collision
 		if (this.collision()) {
@@ -30,7 +30,7 @@ class Player {
 
 		// gravity brings the player down, unless he's atop a barrel
 		if (game.level < 5) { // levels 1-4
-			console.log("Player Y + height: " + (this.y + this.height))
+			//console.log("Player Y + height: " + (this.y + this.height))
 			if (!this.atopBarrel()) { // if player is NOT atop a barrel, he will fall down
 					this.y += this.velocity;
 					this.y = Number(this.y.toFixed(1));
@@ -81,7 +81,7 @@ class Player {
 			//    barrel y: ${game.barrel.y},
 			//    barrel x: ${game.barrel.x},
 			//    barrel x+width: ${(game.barrel.x + game.barrel.width)}`);
-			console.log(this.velocity)
+			//console.log(this.velocity)
 			this.y = game.barrel.y - this.height; // this is just to make the player precisely atop the barrel, so that he'll be able to jump
 			return true; // player is atop the barrel
 		}
@@ -94,7 +94,7 @@ class Player {
 			this.velocity = -10;
 			this.y += this.velocity;
 			this.y = Number(this.y.toFixed(1));
-			console.log("Jumping! Velocity: " + this.velocity + " Player Y + height: " + (this.y + this.height) + " Barrel Y: " + game.barrel.y)
+			//console.log("Jumping! Velocity: " + this.velocity + " Player Y + height: " + (this.y + this.height) + " Barrel Y: " + game.barrel.y)
 		}
 	}
 
@@ -130,5 +130,9 @@ class Player {
 				this.x += 15;
 				this.rifleX = this.x + this.width + this.rifleDistX; // rifle needs to move together with the player
 			}
+	}
+
+	playerShooting() {
+		game.bulletsPlayer.push(new Bullet(game.bulletImage, (this.rifleX + this.rifleWidth - 50), this.rifleY, 45, 21, 'right'));
 	}
 }

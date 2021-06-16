@@ -8,7 +8,8 @@ class Game {
 		this.background = new Background();
 		this.barrel = new Barrel(700);
 		this.boss = new Boss;
-		this.bullets = [];
+		this.bulletsBoss = [];
+		this.bulletsPlayer = [];
 		this.items = [];
 		this.saws = [];
 		this.levelElement = document.getElementById('level');
@@ -22,6 +23,7 @@ class Game {
 		this.score = 0;
 		this.time = 60;
 		this.frames = 100;
+		this.currentBossImage = this.bossImage;
 	}
 
 	preload() {
@@ -58,13 +60,18 @@ class Game {
 		this.sawImage = loadImage('assets/saw.png');
 		this.barrelImage = loadImage('assets/barrel.png');
 		this.bossImage = loadImage('assets/boss.gif');
+		this.deadBossImage = loadImage('assets/boss-dead.png');
 		this.bossRifleImage = loadImage('assets/boss-rifle.gif');
-		this.bossBulletImage = loadImage('assets/boss-bullet.png');
+		this.bulletImage = loadImage('assets/boss-bullet.png');
 		this.playerRifleImage = loadImage('assets/player-rifle.gif');
 	}
 
 	draw() {
 		//if (this.player.x + this.player.width < 0 || this.health <= 0)
+		if (this.boss.health <= 0) { // boss is dead
+			image(game.deadBossImage, this.x - 50, this.y, 63, 23);
+			this.youWon();
+		}
 		if (this.lives === 0) // player has no more lives - end of the game
 			this.gameOver();
 		else if (this.level === 5)
@@ -81,7 +88,9 @@ class Game {
 					this.player.x = 50; // brings player to the initial position
 					this.player.rifleX = this.player.x + this.player.width + this.player.rifleDistX; // rifle needs to move together with the player
 					//this.time = 100;
-					document.getElementById('info').removeChild(document.getElementById('h2-time')); // removes the time counter
+					//document.getElementById('info').removeChild(document.getElementById('h2-time')); // removes the time counter
+					document.getElementById('h2-time').innerHTML = `Boss health: <span id="boss-health">${this.boss.health}</span>`;
+					//document.getElementById('time').textContent = this.boss.health;
 					this.playerImage = loadImage('assets/player-idle.gif');
 				}
 		}
@@ -166,7 +175,7 @@ class Game {
 		})
 
 		if (this.player.x + this.player.width < 0 || this.health <= 0) { // player died either by lack of health or by exiting the screen on the left
-			console.log(game.barrel.x)
+			//console.log(game.barrel.x)
 			if (game.barrel.x === 1) // player killed by the barrel
 				this.player.x = game.barrel.width; // moves player after the barrel
 			else
@@ -193,7 +202,14 @@ class Game {
 	}
 
 	gameOver() {
-		document.getElementById('info').innerHTML = '<h2>GAME</h2><h2>OVER</h2>';		
+		document.getElementById('info').innerHTML = '<h2>GAME</h2><h2>OVER</h2>';
+		noLoop();
+	}
+
+	youWon() {
+		document.getElementById('info').innerHTML = '<h2>YOU</h2><h2>WON</h2>';
+		this.boss.draw();
+		noLoop();
 	}
 
 	finalStage() {
@@ -216,17 +232,21 @@ class Game {
 			this.healthElement.textContent = this.health; // updated health
 		}
 
-		if (frameCount % Math.floor(random(80,160)) === 0) { // draws a new bullet every x frames
-			game.bullets.push(new Bullet(game.bossBulletImage));
+		if (frameCount % Math.floor(random(60,140)) === 0) { // draws a new bullet every x frames
+			game.bulletsBoss.push(new Bullet(game.bulletImage, (game.boss.x - 128 + 15), (game.boss.y + 35), 45, 21, 'left'));
 		}
 		
-		// draws each bullet on the canvas
-		this.bullets.forEach(function (bullet) {
+		// draws each boss bullet on the canvas
+		this.bulletsBoss.forEach(function (bullet) {
+			bullet.draw();
+		})
+		// draws each player bullet on the canvas
+		this.bulletsPlayer.forEach(function (bullet) {
 			bullet.draw();
 		})
 
 		// in case there's a collision, removes the bullet from the screen
-		this.bullets = this.bullets.filter(bullet => {
+		this.bulletsBoss = this.bulletsBoss.filter(bullet => {
 			// let isCollision = saw.collision(this.player);
 			// if (isCollision) console.log(`collision with saw`);
 			if (bullet.collision(this.player)) { // there's a collision
@@ -238,13 +258,26 @@ class Game {
 			}
 		})
 
+		// in case there's a collision, removes the bullet from the screen
+		this.bulletsPlayer = this.bulletsPlayer.filter(bullet => {
+			// let isCollision = saw.collision(this.player);
+			// if (isCollision) console.log(`collision with saw`);
+			if (bullet.collision(this.boss)) { // there's a collision
+				console.log('Bullet has hit the boss');
+				this.boss.health -= 1;
+				document.getElementById('boss-health').textContent = this.boss.health;
+				return false;
+			} else {
+				return true;
+			}
+		})
+
 		// remove from the array the saws that have already left the screen
-		this.bullets = this.bullets.filter(bullet => {
+		this.bulletsBoss = this.bulletsBoss.filter(bullet => {
 			if (bullet.x + bullet.width < 0) return false; // item has left the screen
 			else return true;
 		})
 
-		
 		if (keyIsDown(RIGHT_ARROW)) {
 			// moves the player to the right
 			this.player.runRight();

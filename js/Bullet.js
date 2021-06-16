@@ -1,23 +1,24 @@
 class Bullet {
-	constructor(image) {
+	constructor(image, x, y, w, h, direction) {
 		this.image = image;
-		this.x = (game.boss.x - 128 + 15);
-		this.y = game.boss.y + 35;
-		this.width = 45;
-		this.height = 21;
+		this.x = x;
+		this.y = y;
+		this.width = w;
+		this.height = h;
+		this.direction = direction;
 	}
 
-	collision() {
+	collision(person) {
 		// console.log('collision', playerInfo);
 		// the center of the saw
 		const bulletX = this.x + this.width / 2;
 		const bulletY = this.y + this.height / 2;
 		// the center of the player
-		const playerX = game.player.x + game.player.width / 2;
-		const playerY = game.player.y + game.player.height / 2;
+		const personX = person.x + person.width / 2;
+		const personY = person.y + person.height / 2;
 		// if distance between saw and player is smaller to, or equal 50,
 		// then there's a collision
-		if (dist(bulletX, bulletY, playerX, playerY) > 50) { // not a collision
+		if (dist(bulletX, bulletY, personX, personY) > 50) { // not a collision
 			return false;
 		} else { // collision
 			return true;
@@ -25,7 +26,10 @@ class Bullet {
 	}
 
 	draw() {
-		this.x -= 15;
+		if (this.direction === 'left') // boss is shooting
+			this.x -= 15;
+		if (this.direction === 'right') // player is shooting
+			this.x += 15;
 		image(this.image, this.x, this.y, this.width, this.height);
 	}
 }
