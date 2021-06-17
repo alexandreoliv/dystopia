@@ -13,8 +13,10 @@ function setup() {
 }
 
 function draw() {
-	if (start === 0)
+	if (start === 0) {
 		image(background, 0, 0, width, height);
+		console.log("start 0 perhaps? " + start)
+	}
 
 	if (start === 1) {
 		if (isMusic)
@@ -23,22 +25,27 @@ function draw() {
 	}
 
 	if (start === 2) { // game has finished (either gameover or youwin)
-		game.reset();
-		start = 0;
+		console.log("start is: " + start)
+		start = setTimeout(function(){ start = 0; game.reset();}, 8000);
+		console.log("after the timeout, start is: " + start)
+		// game.reset();
+		//start = 0;
 	}
 }
 
 function keyPressed() {
-	if (keyCode === ENTER) { // enter key
-		game.gameOverEffect.pause(); // if you restart quickly after you win or lose the game, you need to cut the previous sound effect
-		game.youWinEffect.pause(); // if you restart quickly after you win or lose the game, you need to cut the previous sound effect
+	if (keyCode === ENTER && start === 0) { // enter key
 		start = 1;
 		isMusic = true;
 	}
 
-	if (keyCode === 82) { // r key
+	if (keyCode === 82 && start === 1) { // r key
 		start = 2;
 		isMusic = false;
+	}
+
+	if (keyCode === 68 && start === 1) { // d key
+		game.player.lives = 0; // kills the player
 	}
 	
 	if (keyCode === 80) { // p key
@@ -56,12 +63,12 @@ function keyPressed() {
 		}
 	}
 
-	if (keyCode === 32) { // space bar
-		if (!pause && start === 1) // if game is not paused
+	if (keyCode === 32 && start === 1) { // space bar
+		if (!pause) // if game is not paused
 			game.player.jump();
 	}
 
-	if (keyCode === 70) { // f key
+	if (keyCode === 70 && start === 1) { // f key
 		if (!pause) { // if game is not paused
 			// go directly to the final stage
 			if (game.level < 5) { // prevents player from pressing the key twice

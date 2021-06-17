@@ -96,7 +96,7 @@ class Game {
 		this.time = 30;
 		this.frames = 100;
 
-		console.log("Before: " + document.getElementById('header').innerHTML);
+		// console.log("Before: " + document.getElementById('header').innerHTML);
 		document.getElementById('header').innerHTML = `
 			<h2>Dystopia</h2>
 			<div id="div-level">
@@ -108,7 +108,7 @@ class Game {
 				<h3>Score: <span id="score">0</span></h3>
 				<h3 id="h3-time">Time: <span id="time">30</span>
 			</div>`;
-		console.log("After: " + document.getElementById('header').innerHTML);
+		// console.log("After: " + document.getElementById('header').innerHTML);
 
 		this.levelElement = document.getElementById('level');
 		this.livesElement = document.getElementById('lives');
@@ -274,7 +274,6 @@ class Game {
 		this.gameOverEffect.play();
 		this.backgroundMusic.pause();
 		start = 2;
-		//noLoop();
 	}
 
 	youWin() {
@@ -285,7 +284,6 @@ class Game {
 		this.youWinEffect.play();
 		this.backgroundMusic.pause();
 		start = 2;
-		//noLoop();
 	}
 
 	finalStage() {
