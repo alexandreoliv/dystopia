@@ -58,24 +58,16 @@ class Player {
 	}
 
 	atopBarrel() {
-		/* P.S.: The first comparison should be === 0, but player.y changes in multiple ways and will
+		/* P.S.: the first comparison should be === 0, but player.y changes in multiple ways and will
 		never have the exact y as the barrel.y so if he's close enough its y will be changed to the
 		precise y of the barrel */
 		if (
-			(game.barrel.y - (this.y + this.height) < 10) // player is vertically one the position of the barrel
+			(game.barrel.y - (this.y + this.height) < 10) // player is vertically on the position of the barrel or super close (due to velocity variations)
 			&&
 			(this.x + this.width > game.barrel.x) // player is horizontally after or exactly at the beginning of the barrel
 			&&
 			(this.x <= game.barrel.x + game.barrel.width) // player is horizontally before of exactly at the end of the barrel
 		   ) {
-			//    console.log(`
-			//    player y+height: ${(this.y + this.height)},
-			//    player x: ${this.x},
-			//    player x+width: ${(this.x + this.width)},
-			//    barrel y: ${game.barrel.y},
-			//    barrel x: ${game.barrel.x},
-			//    barrel x+width: ${(game.barrel.x + game.barrel.width)}`);
-			//console.log(this.velocity)
 			this.y = game.barrel.y - this.height; // this is just to make the player precisely atop the barrel, so that he'll be able to jump
 			return true; // player is atop the barrel
 		}
@@ -105,7 +97,7 @@ class Player {
 					this.x -= 15;
 			}
 		}
-		else // Final stage
+		else // final stage
 			if (this.x - 15 > 0) { // if the player is not at the left edge
 				this.x -= 15;
 				this.rifleX = this.x + this.width + this.rifleDistX; // rifle needs to move together with the player
@@ -122,7 +114,7 @@ class Player {
 					this.x += 15;
 			}
 		}
-		else // Final stage
+		else // final stage
 			if (this.x + this.width + 15 < game.boss.rifleX) { // if the player is not too close to the rifle
 				this.x += 15;
 				this.rifleX = this.x + this.width + this.rifleDistX; // rifle needs to move together with the player

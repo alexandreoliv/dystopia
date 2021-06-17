@@ -103,10 +103,10 @@ class Game {
 				<h3 id="level">LEVEL 1</span></h3>
 			</div>
 			<div id="info">
-				<h3>Lives: <span id="lives">3</span></h3>
-				<h3>Health: <span id="health">100</span></h3>
-				<h3>Score: <span id="score">0</span></h3>
-				<h3 id="h3-time">Time: <span id="time">30</span>
+				<h3>lives: <span id="lives">3</span></h3>
+				<h3>health: <span id="health">100</span></h3>
+				<h3>score: <span id="score">0</span></h3>
+				<h3 id="h3-time">time: <span id="time">30</span>
 			</div>`;
 		// console.log("After: " + document.getElementById('header').innerHTML);
 
@@ -153,7 +153,7 @@ class Game {
 				this.player.x = 50; // brings player to the initial position
 				this.player.rifleX = this.player.x + this.player.width + this.player.rifleDistX; // rifle needs to move together with the player
 				document.getElementById('level').innerHTML = 'FINAL STAGE';
-				document.getElementById('h3-time').innerHTML = `Boss: <span id="boss-health">${this.boss.health}</span>`;
+				document.getElementById('h3-time').innerHTML = `boss: <span id="boss-health">${this.boss.health}</span>`;
 				this.playerImage = this.playerIdleImage;
 			}
 		}
@@ -277,7 +277,7 @@ class Game {
 
 	gameOver() {
 		document.getElementById('level').innerHTML = '<span>GAME OVER</span>';
-		document.getElementById('info').innerHTML = `<h3>Final score: <span>${this.player.score * this.level}</span> <span id="formula">(points x levels)</span></h3>`;
+		document.getElementById('info').innerHTML = `<h3>final score: <span>${this.player.score * this.level}</span> <span id="formula">(points x levels)</span></h3>`;
 		this.gameOverEffect.play();
 		this.backgroundMusic.pause();
 		start = 2;
@@ -285,7 +285,7 @@ class Game {
 
 	youWin() {
 		document.getElementById('level').innerHTML = '<span>YOU WIN</span>';
-		document.getElementById('info').innerHTML = `<h3>Final score: <span>${this.player.score * this.level + this.player.lives * 100 + this.player.health}</span> <span id="formula">(points x levels) 
+		document.getElementById('info').innerHTML = `<h3>final score: <span>${this.player.score * this.level + this.player.lives * 100 + this.player.health}</span> <span id="formula">(points x levels) 
 		+ health + (lives x 100)</h3>`;
 
 		this.youWinEffect.play();
@@ -307,13 +307,15 @@ class Game {
 		}
 
 		if (this.player.health <= 0) { // player died by lack of health
-			this.player.x = 50; // brings player to the initial position
-			this.player.rifleX = this.player.x + this.player.width + this.player.rifleDistX; // rifle needs to move together with the player
 			this.player.lives--; // one life is lost
 			if (this.player.lives > 0) this.deathEffect.play(); // if the last life is lost there's no sound effect because it's also game over
 			this.player.health = 100; // restores full health
 			this.livesElement.textContent = this.player.lives; // updates lives
 			this.healthElement.textContent = this.player.health; // updated health
+			if (this.player.lives > 0) { // player is still playing
+				this.player.x = 50; // brings player to the initial position
+				this.player.rifleX = this.player.x + this.player.width + this.player.rifleDistX; // rifle needs to move together with the player
+			}
 		}
 
 		if (frameCount % Math.floor(random(60,140)) === 0) { // draws a new bullet every x frames
@@ -391,19 +393,4 @@ class Game {
 		document.getElementById('body').appendChild(div);
 		document.getElementById('buttons').append(h3);
 	}
-
-	// createAndDestroyFooter() {
-	// 	let div = document.createElement('div');
-	// 	div.id = 'buttons';
-	// 	let h3 = document.createElement('h3');
-	// 	h3.innerHTML = 'shoot: <span>ctrl</span> | jump: <span>space bar</span> | move: <span>⬅/➡</span>';
-	// 	document.getElementById('body').appendChild(div);
-	// 	document.getElementById('buttons').append(h3);
-		
-	// 	setTimeout(function(){ destroyFooter(); }, 8000);
-	// }
-	
-	// destroyFooter() {
-	// 	document.getElementById('buttons').innerHTML = '';
-	// }
 }
