@@ -10,6 +10,8 @@ function setup() {
 	pause = 0;
 	start = 0;
 	game.setup();
+
+	game.createFooter();
 }
 
 function draw() {
@@ -34,6 +36,7 @@ function keyPressed() {
 	if (keyCode === ENTER && start === 0) { // enter key
 		start = 1;
 		isMusic = true;
+		game.destroyFooter();
 	}
 
 	if (keyCode === 82 && start === 1) { // r key

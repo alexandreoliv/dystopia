@@ -119,6 +119,8 @@ class Game {
 		this.playerImage = this.playerRunImage;
 		this.currentBossImage = this.bossImage;
 		this.backgroundMusic.pause();
+		
+		document.getElementById('buttons').innerHTML = 'jump: <span>space bar</span> | move: <span>⬅/➡</span> | music on/off: <span>s</span> | reset: <span>r</span> | pause: <span>p</span>';
 	}
 
 	draw() {
@@ -128,8 +130,9 @@ class Game {
 		if (this.player.lives === 0) // player has no more lives - end of the game
 			this.gameOver();
 		
-		if (this.level === 5)
+		if (this.level === 5) {
 			this.finalStage();
+		}
 
 		else if (this.time === 0) { // a new level starts
 			this.level++;
@@ -292,6 +295,8 @@ class Game {
 		this.boss.draw();
 		this.barrel.x = height; // removes barrel from screen so that player can't jump at the original position of the barrel
 
+		document.getElementById('buttons').innerHTML = 'shoot: <span>ctrl</span> | jump: <span>space bar</span> | move: <span>⬅/➡</span>';
+
 		if (frameCount % 10 === 0) { // time decreases ----------- show be frameCounter % 100 when the game is ready
 			this.time -= 1;
 			this.timeElement.textContent = this.time;
@@ -373,4 +378,28 @@ class Game {
 			this.player.runLeft();
 		}
 	}
+
+	createFooter() {
+		let div = document.createElement('div');
+		div.id = 'buttons';
+		let h3 = document.createElement('h3');
+		h3.innerHTML = 'jump: <span>space bar</span> | move: <span>⬅/➡</span> | music on/off: <span>s</span> | reset: <span>r</span> | pause: <span>p</span>';
+		document.getElementById('body').appendChild(div);
+		document.getElementById('buttons').append(h3);
+	}
+
+	// createAndDestroyFooter() {
+	// 	let div = document.createElement('div');
+	// 	div.id = 'buttons';
+	// 	let h3 = document.createElement('h3');
+	// 	h3.innerHTML = 'shoot: <span>ctrl</span> | jump: <span>space bar</span> | move: <span>⬅/➡</span>';
+	// 	document.getElementById('body').appendChild(div);
+	// 	document.getElementById('buttons').append(h3);
+		
+	// 	setTimeout(function(){ destroyFooter(); }, 8000);
+	// }
+	
+	// destroyFooter() {
+	// 	document.getElementById('buttons').innerHTML = '';
+	// }
 }
