@@ -5,58 +5,58 @@ class Game {
 
 	preload() {
 		this.backgroundImages = [
-			{ src: loadImage('assets/background-far-buildings.png'), x: 0, speed: 0.5 },
-			{ src: loadImage('assets/background-back-buildings.png'), x: 0, speed: 1 },
-			{ src: loadImage('assets/background-foreground.png'), x: 0, speed: 1.5 }
+			{ src: loadImage('assets/img/background-far-buildings.png'), x: 0, speed: 0.5 },
+			{ src: loadImage('assets/img/background-back-buildings.png'), x: 0, speed: 1 },
+			{ src: loadImage('assets/img/background-foreground.png'), x: 0, speed: 1.5 }
 		];
-		this.playerImage = loadImage('assets/player-run.gif');
-		this.playerIdleImage = loadImage('assets/player-idle.gif');
+		this.playerRunImage = loadImage('assets/img/player-run.gif');
+		this.playerIdleImage = loadImage('assets/img/player-idle.gif');
 		this.itemImages = [
-			{ src: loadImage('assets/pizza.png'), name: 'pizza', health: 15, score: 0, life: 0, width: 3072/60, height: 3072/60 },
-			{ src: loadImage('assets/pizza.png'), name: 'pizza', health: 15, score: 0, life: 0, width: 3072/60, height: 3072/60 },
-			{ src: loadImage('assets/pizza.png'), name: 'pizza', health: 15, score: 0, life: 0, width: 3072/60, height: 3072/60 },
-			{ src: loadImage('assets/chicken.png'), name: 'chicken', health: 10, score: 0, life: 0, width: 31*2, height: 32*2 },
-			{ src: loadImage('assets/chicken.png'), name: 'chicken', health: 10, score: 0, life: 0, width: 31*2, height: 32*2 },
-			{ src: loadImage('assets/chicken.png'), name: 'chicken', health: 10, score: 0, life: 0, width: 31*2, height: 32*2 },
-			{ src: loadImage('assets/chicken.png'), name: 'chicken', health: 10, score: 0, life: 0, width: 31*2, height: 32*2 },
-			{ src: loadImage('assets/coffee.png'), name: 'coffee', health: 5, score: 0, life: 0, width: 68, height: 47 },
-			{ src: loadImage('assets/coffee.png'), name: 'coffee', health: 5, score: 0, life: 0, width: 68, height: 47 },
-			{ src: loadImage('assets/coffee.png'), name: 'coffee', health: 5, score: 0, life: 0, width: 68, height: 47 },
-			{ src: loadImage('assets/coffee.png'), name: 'coffee', health: 5, score: 0, life: 0, width: 68, height: 47 },
-			{ src: loadImage('assets/coffee.png'), name: 'coffee', health: 5, score: 0, life: 0, width: 68, height: 47 },
-			{ src: loadImage('assets/heart.png'), name: 'heart', health: 0, score: 0, life: 1, width: 416/10, height: 416/10 },
-			{ src: loadImage('assets/ak47.png'), name: 'ak47', health: 0, score: 30, life: 0, width: 478/4, height: 206/4 },
-			{ src: loadImage('assets/ak47.png'), name: 'ak47', health: 0, score: 30, life: 0, width: 478/4, height: 206/4 },
-			{ src: loadImage('assets/pistol.png'), name: 'pistol', health: 0, score: 15, life: 0, width: 184/3, height: 146/3 },
-			{ src: loadImage('assets/pistol.png'), name: 'pistol', health: 0, score: 15, life: 0, width: 184/3, height: 146/3 },
-			{ src: loadImage('assets/pistol.png'), name: 'pistol', health: 0, score: 15, life: 0, width: 184/3, height: 146/3 },
-			{ src: loadImage('assets/knife.png'), name: 'knife', health: 0, score: 5, life: 0, width: 110/6, height: 404/6 },
-			{ src: loadImage('assets/knife.png'), name: 'knife', health: 0, score: 5, life: 0, width: 110/6, height: 404/6 },
-			{ src: loadImage('assets/knife.png'), name: 'knife', health: 0, score: 5, life: 0, width: 110/6, height: 404/6 },
-			{ src: loadImage('assets/knife.png'), name: 'knife', health: 0, score: 5, life: 0, width: 110/6, height: 404/6 },
+			{ src: loadImage('assets/img/pizza.png'), name: 'pizza', health: 15, score: 0, life: 0, width: 3072/60, height: 3072/60 },
+			{ src: loadImage('assets/img/pizza.png'), name: 'pizza', health: 15, score: 0, life: 0, width: 3072/60, height: 3072/60 },
+			{ src: loadImage('assets/img/pizza.png'), name: 'pizza', health: 15, score: 0, life: 0, width: 3072/60, height: 3072/60 },
+			{ src: loadImage('assets/img/chicken.png'), name: 'chicken', health: 10, score: 0, life: 0, width: 31*2, height: 32*2 },
+			{ src: loadImage('assets/img/chicken.png'), name: 'chicken', health: 10, score: 0, life: 0, width: 31*2, height: 32*2 },
+			{ src: loadImage('assets/img/chicken.png'), name: 'chicken', health: 10, score: 0, life: 0, width: 31*2, height: 32*2 },
+			{ src: loadImage('assets/img/chicken.png'), name: 'chicken', health: 10, score: 0, life: 0, width: 31*2, height: 32*2 },
+			{ src: loadImage('assets/img/coffee.png'), name: 'coffee', health: 5, score: 0, life: 0, width: 68, height: 47 },
+			{ src: loadImage('assets/img/coffee.png'), name: 'coffee', health: 5, score: 0, life: 0, width: 68, height: 47 },
+			{ src: loadImage('assets/img/coffee.png'), name: 'coffee', health: 5, score: 0, life: 0, width: 68, height: 47 },
+			{ src: loadImage('assets/img/coffee.png'), name: 'coffee', health: 5, score: 0, life: 0, width: 68, height: 47 },
+			{ src: loadImage('assets/img/coffee.png'), name: 'coffee', health: 5, score: 0, life: 0, width: 68, height: 47 },
+			{ src: loadImage('assets/img/heart.png'), name: 'heart', health: 0, score: 0, life: 1, width: 416/10, height: 416/10 },
+			{ src: loadImage('assets/img/ak47.png'), name: 'ak47', health: 0, score: 30, life: 0, width: 478/4, height: 206/4 },
+			{ src: loadImage('assets/img/ak47.png'), name: 'ak47', health: 0, score: 30, life: 0, width: 478/4, height: 206/4 },
+			{ src: loadImage('assets/img/pistol.png'), name: 'pistol', health: 0, score: 15, life: 0, width: 184/3, height: 146/3 },
+			{ src: loadImage('assets/img/pistol.png'), name: 'pistol', health: 0, score: 15, life: 0, width: 184/3, height: 146/3 },
+			{ src: loadImage('assets/img/pistol.png'), name: 'pistol', health: 0, score: 15, life: 0, width: 184/3, height: 146/3 },
+			{ src: loadImage('assets/img/knife.png'), name: 'knife', health: 0, score: 5, life: 0, width: 110/6, height: 404/6 },
+			{ src: loadImage('assets/img/knife.png'), name: 'knife', health: 0, score: 5, life: 0, width: 110/6, height: 404/6 },
+			{ src: loadImage('assets/img/knife.png'), name: 'knife', health: 0, score: 5, life: 0, width: 110/6, height: 404/6 },
+			{ src: loadImage('assets/img/knife.png'), name: 'knife', health: 0, score: 5, life: 0, width: 110/6, height: 404/6 },
 		];
-		this.sawImage = loadImage('assets/saw.png');
-		this.barrelImage = loadImage('assets/barrel.png');
-		this.bossImage = loadImage('assets/boss.gif');
-		this.deadBossImage = loadImage('assets/boss-dead.png');
-		this.bossRifleImage = loadImage('assets/boss-rifle.gif');
-		this.bulletImage = loadImage('assets/boss-bullet.png');
-		this.playerRifleImage = loadImage('assets/player-rifle.gif');
+		this.sawImage = loadImage('assets/img/saw.png');
+		this.barrelImage = loadImage('assets/img/barrel.png');
+		this.bossImage = loadImage('assets/img/boss.gif');
+		this.deadBossImage = loadImage('assets/img/boss-dead.png');
+		this.bossRifleImage = loadImage('assets/img/boss-rifle.gif');
+		this.bulletImage = loadImage('assets/img/boss-bullet.png');
+		this.playerRifleImage = loadImage('assets/img/player-rifle.gif');
 
-		this.backgroundMusic = new Audio('assets/sound/music.mp3'); // or music.wav (which is another song)
-		this.coffeeEffect = new Audio('assets/sound/coffee.wav');
-		this.deathEffect = new Audio('assets/sound/death.wav'); // or death2.wav (another effect)
-		this.eatEffect = new Audio('assets/sound/eat.wav');
-		this.gameOverEffect = new Audio('assets/sound/gameover.wav');
-		this.gunEffect = new Audio('assets/sound/gun.wav');
-		this.heartEffect = new Audio('assets/sound/heart.wav');		
-		this.hurtEffect = new Audio('assets/sound/hurt.wav');
-		this.jumpEffect = new Audio('assets/sound/jump.wav');
-		this.knifeEffect = new Audio('assets/sound/knife.wav');
-		this.levelUpEffect = new Audio('assets/sound/levelup.wav');
-		this.bossShootEffect = new Audio('assets/sound/shoot-boss.wav');
-		this.playerShootEffect = new Audio('assets/sound/shoot-player.wav');
-		this.youWinEffect = new Audio('assets/sound/youwin.wav');
+		this.backgroundMusic = new Audio('assets/sfx/music.mp3'); // or music.wav (which is another song)
+		this.coffeeEffect = new Audio('assets/sfx/coffee.wav');
+		this.deathEffect = new Audio('assets/sfx/death.wav'); // or death2.wav (another effect)
+		this.eatEffect = new Audio('assets/sfx/eat.wav');
+		this.gameOverEffect = new Audio('assets/sfx/gameover.wav');
+		this.gunEffect = new Audio('assets/sfx/gun.wav');
+		this.heartEffect = new Audio('assets/sfx/heart.wav');		
+		this.hurtEffect = new Audio('assets/sfx/hurt.wav');
+		this.jumpEffect = new Audio('assets/sfx/jump.wav');
+		this.knifeEffect = new Audio('assets/sfx/knife.wav');
+		this.levelUpEffect = new Audio('assets/sfx/levelup.wav');
+		this.bossShootEffect = new Audio('assets/sfx/shoot-boss.wav');
+		this.playerShootEffect = new Audio('assets/sfx/shoot-player.wav');
+		this.youWinEffect = new Audio('assets/sfx/youwin.wav');
 	}
 
 	setup() {
@@ -64,6 +64,7 @@ class Game {
 		this.background = new Background();
 		this.barrel = new Barrel(700);
 		this.boss = new Boss;
+		this.playerImage = this.playerRunImage;
 		this.currentBossImage = this.bossImage;
 		this.items = [];
 		this.saws = [];
@@ -75,11 +76,53 @@ class Game {
 		this.scoreElement = document.getElementById('score');
 		this.timeElement = document.getElementById('time');
 		this.level = 1;
-		this.time = 45;
+		this.time = 30;
 		this.frames = 100;
 		this.backgroundMusic.loop = true;
-		this.backgroundMusic.play();
-		this.isSound = true;
+	}
+
+	reset() {
+		console.log("Game has been reset");
+		// console.log("Level before reset: " + this.level);
+		
+		this.player = new Player();
+		this.background = new Background();
+		this.barrel = new Barrel(700);
+		this.boss = new Boss;
+		this.currentBossImage = this.bossImage;
+		this.items = [];
+		this.saws = [];
+		this.bulletsBoss = [];
+		this.bulletsPlayer = [];
+		this.level = 1;
+		this.time = 30;
+		this.frames = 100;
+
+		// console.log("Level after reset: " + this.level);
+
+		// console.log("Before: " + document.getElementsByClassName('body').innerHTML);
+		// document.getElementsByClassName('body').innerHTML = `
+		// <h2>Dystopia</h2>
+		// <div id="div-level">
+      	// 	<h3>LEVEL <span id="level">1</span></h3>
+    	// </div>
+    	// <div id="info">
+      	// 	<h3>Lives: <span id="lives">3</span></h3>
+      	// 	<h3>Health: <span id="health">100</span></h3>
+      	// 	<h3>Score: <span id="score">0</span></h3>
+      	// 	<h3 id="h3-time">Time: <span id="time">30</span>
+    	// </div>`;
+		// console.log("After: " + document.getElementsByClassName('body').innerHTML);
+
+		this.scoreElement.textContent = this.player.score;
+		this.healthElement.textContent = this.player.health;
+		this.livesElement.textContent = this.player.lives;
+		this.levelElement.textContent = this.level;
+		this.timeElement.textContent = this.time;
+		this.backgroundMusic.currentTime = 0; // restarts music
+		this.playerImage = this.playerRunImage;
+		this.currentBossImage = this.bossImage;
+		this.backgroundMusic.pause();
 	}
 
 	draw() {
@@ -100,7 +143,7 @@ class Game {
 			// console.log("frames before: " + this.frames)
 			this.frames /= 2;
 			// console.log("frames after: " + this.frames)
-			this.time = 45;
+			this.time = 30;
 	
 			if (this.level === 5) { // player has reached final level
 				this.player.x = 50; // brings player to the initial position
@@ -111,6 +154,11 @@ class Game {
 			}
 		}
 		else this.gameOn(); // player is playing the current level
+	}
+
+	pause() {
+		if (pause) noLoop();
+		else loop();
 	}
 
 	gameOn() {
@@ -229,7 +277,8 @@ class Game {
 			document.getElementById('info').innerHTML = `<h3>Final score: ${this.player.score} points x ${this.level} levels = ${this.player.score * this.level}</h3>`;
 		this.gameOverEffect.play();
 		this.backgroundMusic.pause();
-		noLoop();
+		start = 2;
+		//noLoop();
 	}
 
 	youWin() {
@@ -239,7 +288,8 @@ class Game {
 
 		this.youWinEffect.play();
 		this.backgroundMusic.pause();
-		noLoop();
+		start = 2;
+		//noLoop();
 	}
 
 	finalStage() {

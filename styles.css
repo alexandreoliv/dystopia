@@ -25,3 +25,9 @@ h3 {
 div {
   margin: -10px 0;
 }
+
+#xp5_loading {
+  background-image: url('assets/landing-background.png');
+  width: 1216px;
+  height: 768px;
+}
