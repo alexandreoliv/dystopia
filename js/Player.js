@@ -1,5 +1,8 @@
 class Player {
 	constructor() {
+		this.lives = 3;
+		this.health = 100;
+		this.score = 0;
 		this.velocity = 0; // as soon as the player is drawn, velocity will increase to 0 which should be the initial value so this works fine
 		this.gravity = 0.2;
 		this.width = 78;
@@ -80,7 +83,7 @@ class Player {
 	}
 
 	jump() {
-		if (game.lives > 0) { // without this, player would still be able to jump (and make sounds) after the game over
+		if (this.lives > 0) { // without this, player would still be able to jump (and make sounds) after the game over
 			if (this.y === height - this.height || this.atopBarrel()) { // player is in the ground or atop the barrel
 				//console.log	(this.atopBarrel());
 				game.jumpEffect.play();

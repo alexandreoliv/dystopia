@@ -31,7 +31,7 @@ function keyPressed() {
 	}
 
 	if (keyCode === 17) { // Ctrl / Strg key
-		if (game.level === 5 && game.lives > 0 && game.boss.health > 0)
+		if (game.level === 5 && game.player.lives > 0 && game.boss.health > 0)
 			game.player.playerShooting(); // player is shooting
 	}
 
