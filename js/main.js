@@ -1,7 +1,7 @@
 const game = new Game();
 
 function preload() {
-	background = loadImage('assets/img/landing-background.png');
+	backgroundIntro = loadImage('assets/img/landing-background.png');
 	game.preload();
 }
 
@@ -13,23 +13,20 @@ function setup() {
 }
 
 function draw() {
-	if (start === 0) {
-		image(background, 0, 0, width, height);
-		console.log("start 0 perhaps? " + start)
+	if (start === 0) { // intro screen
+		image(backgroundIntro, 0, 0, width, height);
 	}
 
-	if (start === 1) {
+	if (start === 1) { // game is running
 		if (isMusic)
 			game.backgroundMusic.play();
 		game.draw();
 	}
 
 	if (start === 2) { // game has finished (either gameover or youwin)
-		console.log("start is: " + start)
-		start = setTimeout(function(){ start = 0; game.reset();}, 8000);
-		console.log("after the timeout, start is: " + start)
-		// game.reset();
-		//start = 0;
+		//console.log("start is: " + start)
+		start = setTimeout(function(){ start = 0; game.reset();}, 8000); // I don't know why, but this works
+		//console.log("after the timeout, start is: " + start)
 	}
 }
 

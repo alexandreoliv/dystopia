@@ -5,24 +5,32 @@ body {
   align-items: center;
   font-family: "Spartan", sans-serif;
   background-color: #c8dad3;
-  /* color: white;
-  background-image: url('assets/background-far-buildings.png'); */
 }
 
-#info, #div-level {
+#info, #div-level, #dystopia {
   display: flex;
   justify-content: center;
 }
 
 h2 {
-  margin: 10px 0 10px 0;
-  text-align: center;
+  margin: 0px 0 10px 0;
+  text-align: left;
+}
+
+#h3-level {
+  padding: 6px 25px 10px 25px;
+  margin: 0px 0 10px 0;
 }
 
 h3 {
-  padding: 0 100px;
+  padding: 0 25px 0 25px;
+  margin: 0px 0 10px 0;
 }
 
-div {
-  margin: -10px 0;
+#defaultCanvas0 {
+  /* border: 5px solid black; */
+  /* max-width: 1024px;
+  max-height: 768px; */
+  max-width: 837.33px;
+  max-height: 628px;
 }

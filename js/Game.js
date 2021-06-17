@@ -82,7 +82,7 @@ class Game {
 	}
 
 	reset() {
-		console.log("Game has been reset");
+		//console.log("Game has been reset");
 		this.player = new Player();
 		this.background = new Background();
 		this.barrel = new Barrel(700);
@@ -98,9 +98,9 @@ class Game {
 
 		// console.log("Before: " + document.getElementById('header').innerHTML);
 		document.getElementById('header').innerHTML = `
-			<h2>Dystopia</h2>
-			<div id="div-level">
-				<h3>LEVEL <span id="level">1</span></h3>
+			<div id="dystopia">
+				<h2>Dystopia</h2>
+				<h3 id="h3-level">LEVEL <span id="level">1</span></h3>
 			</div>
 			<div id="info">
 				<h3>Lives: <span id="lives">3</span></h3>
@@ -144,8 +144,8 @@ class Game {
 			if (this.level === 5) { // player has reached final level
 				this.player.x = 50; // brings player to the initial position
 				this.player.rifleX = this.player.x + this.player.width + this.player.rifleDistX; // rifle needs to move together with the player
-				document.getElementById('div-level').innerHTML = '<h3>FINAL STAGE</h3>';
-				document.getElementById('h3-time').innerHTML = `Boss health: <span id="boss-health">${this.boss.health}</span>`;
+				document.getElementById('h3-level').innerHTML = 'FINAL STAGE';
+				document.getElementById('h3-time').innerHTML = `Boss: <span id="boss-health">${this.boss.health}</span>`;
 				this.playerImage = this.playerIdleImage;
 			}
 		}
@@ -266,7 +266,7 @@ class Game {
 	}
 
 	gameOver() {
-		document.getElementById('div-level').innerHTML = '<h3>GAME</h3><h3>OVER</h3>';
+		document.getElementById('h3-level').innerHTML = 'GAME OVER';
 		if (game.level === 1)
 			document.getElementById('info').innerHTML = `<h3>Final score: ${this.player.score} points x ${this.level} level = ${this.player.score * this.level}</h3>`;
 		else
@@ -277,7 +277,7 @@ class Game {
 	}
 
 	youWin() {
-		document.getElementById('div-level').innerHTML = '<h3>YOU</h3><h3>WIN</h3>';
+		document.getElementById('h3-level').innerHTML = 'YOU WIN';
 		document.getElementById('info').innerHTML = `<h3>Final score: ${this.player.score * this.level} (points x levels) 
 		+ ${this.player.lives * 100 + this.player.health} (health + remaining lives) = ${this.player.score * this.level + this.player.lives * 100 + this.player.health}</h3>`;
 
