@@ -100,7 +100,7 @@ class Game {
 		document.getElementById('header').innerHTML = `
 			<div id="dystopia">
 				<h2>Dystopia</h2>
-				<h3 id="h3-level">LEVEL <span id="level">1</span></h3>
+				<h3 id="level">LEVEL 1</span></h3>
 			</div>
 			<div id="info">
 				<h3>Lives: <span id="lives">3</span></h3>
@@ -134,11 +134,16 @@ class Game {
 			this.finalStage();
 		}
 
-		else if (this.time === 0) { // a new level starts
+		/* P.S.: this.time === 0 was buggy because pressing 'f' to go
+		directly to the final stage would bring the time to 0, but if by
+		coincidence the variable this.time was just about to be decreased
+		on the next frame, it would go to -1 and wouldn't work
+		*/
+		else if (this.time <= 0) { // a new level starts.
 			this.level++;
 			this.levelUpEffect.play();
 
-			this.levelElement.textContent = this.level;
+			this.levelElement.innerHTML = `LEVEL ${this.level}`;
 			// console.log("frames before: " + this.frames)
 			this.frames /= 2;
 			// console.log("frames after: " + this.frames)
@@ -147,7 +152,7 @@ class Game {
 			if (this.level === 5) { // player has reached final level
 				this.player.x = 50; // brings player to the initial position
 				this.player.rifleX = this.player.x + this.player.width + this.player.rifleDistX; // rifle needs to move together with the player
-				document.getElementById('h3-level').innerHTML = 'FINAL STAGE';
+				document.getElementById('level').innerHTML = 'FINAL STAGE';
 				document.getElementById('h3-time').innerHTML = `Boss: <span id="boss-health">${this.boss.health}</span>`;
 				this.playerImage = this.playerIdleImage;
 			}
@@ -269,20 +274,17 @@ class Game {
 	}
 
 	gameOver() {
-		document.getElementById('h3-level').innerHTML = 'GAME OVER';
-		if (game.level === 1)
-			document.getElementById('info').innerHTML = `<h3>Final score: ${this.player.score} points x ${this.level} level = ${this.player.score * this.level}</h3>`;
-		else
-			document.getElementById('info').innerHTML = `<h3>Final score: ${this.player.score} points x ${this.level} levels = ${this.player.score * this.level}</h3>`;
+		document.getElementById('level').innerHTML = '<span>GAME OVER</span>';
+		document.getElementById('info').innerHTML = `<h3>Final score: <span>${this.player.score * this.level}</span> <span id="formula">(points x levels)</span></h3>`;
 		this.gameOverEffect.play();
 		this.backgroundMusic.pause();
 		start = 2;
 	}
 
 	youWin() {
-		document.getElementById('h3-level').innerHTML = 'YOU WIN';
-		document.getElementById('info').innerHTML = `<h3>Final score: ${this.player.score * this.level} (points x levels) 
-		+ ${this.player.lives * 100 + this.player.health} (health + remaining lives) = ${this.player.score * this.level + this.player.lives * 100 + this.player.health}</h3>`;
+		document.getElementById('level').innerHTML = '<span>YOU WIN</span>';
+		document.getElementById('info').innerHTML = `<h3>Final score: <span>${this.player.score * this.level + this.player.lives * 100 + this.player.health}</span> <span id="formula">(points x levels) 
+		+ health + (lives x 100)</h3>`;
 
 		this.youWinEffect.play();
 		this.backgroundMusic.pause();

@@ -27,7 +27,7 @@ function draw() {
 
 	if (start === 2) { // game has finished (either gameover or youwin)
 		//console.log("start is: " + start)
-		start = setTimeout(function(){ start = 0; game.reset();}, 8000); // I don't know why, but this works
+		start = setTimeout(function(){ start = 0; game.reset();}, 6000); // I don't know why, but this works
 		//console.log("after the timeout, start is: " + start)
 	}
 }
@@ -36,11 +36,11 @@ function keyPressed() {
 	if (keyCode === ENTER && start === 0) { // enter key
 		start = 1;
 		isMusic = true;
-		game.destroyFooter();
 	}
 
 	if (keyCode === 82 && start === 1) { // r key
-		start = 2;
+		game.reset();
+		start = 0;
 		isMusic = false;
 	}
 
@@ -48,7 +48,7 @@ function keyPressed() {
 		game.player.lives = 0; // kills the player
 	}
 	
-	if (keyCode === 80) { // p key
+	if (keyCode === 80 && start === 1) { // p key
 		if (pause === 0) {
 			pause = 1;
 			game.pause();
