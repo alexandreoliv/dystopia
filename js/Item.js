@@ -21,7 +21,7 @@ class Item {
 		const playerY = playerInfo.y + playerInfo.height / 2;
 		// if distance between item and player is smaller to, or equal 50,
 		// then there's a collision
-		if (dist(itemX, itemY, playerX, playerY) > 50) { // not a collision
+		if (dist(itemX, itemY, playerX, playerY) > 70) { // not a collision
 			return false;
 		} else { // collision
 			return true;
