@@ -22,7 +22,7 @@ class Player {
 		//console.log("Walking or falling down. Velocity: " + this.velocity + " Player Y + height: " + (this.y + this.height));
 
 		// if distance between barrel and player is 0, there's a collision
-		if (this.collision()) {
+		if (game.barrel.collision()) {
 			//console.log(`collision. player x+width: ${this.x + this.width}, barrel x: ${game.barrel.x}`)
 			this.x -= 1.5;
 		}
@@ -52,14 +52,6 @@ class Player {
 
 		if (game.level === 5)
 			image(game.playerRifleImage, this.rifleX, this.rifleY, this.rifleWidth, this.rifleHeight);
-	}
-
-	collision() {
-		if ((game.barrel.x - (this.x + this.width) < 1.5) && // player is approaching barrel
-			(game.barrel.x - (this.x + this.width) > 0) && // player is after barrel
-			(this.y + this.height >= game.barrel.y)) // player is not completely above barrel
-			return true;
-		return false;
 	}
 
 	atopBarrel() {

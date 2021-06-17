@@ -3,30 +3,6 @@ class Game {
 		this.backgroundImages;
 	}
 
-	setup() {
-		this.player = new Player();
-		this.background = new Background();
-		this.barrel = new Barrel(700);
-		this.boss = new Boss;
-		this.bulletsBoss = [];
-		this.bulletsPlayer = [];
-		this.items = [];
-		this.saws = [];
-		this.levelElement = document.getElementById('level');
-		this.livesElement = document.getElementById('lives');
-		this.healthElement = document.getElementById('health');
-		this.scoreElement = document.getElementById('score');
-		this.timeElement = document.getElementById('time');
-		this.level = 1;
-		this.lives = 3;
-		this.health = 100;
-		this.score = 0;
-		this.time = 60;
-		this.frames = 100;
-		this.currentBossImage = this.bossImage;
-		this.backgroundMusic.loop = true;
-	}
-
 	preload() {
 		this.backgroundImages = [
 			{ src: loadImage('assets/background-far-buildings.png'), x: 0, speed: 0.5 },
@@ -34,6 +10,7 @@ class Game {
 			{ src: loadImage('assets/background-foreground.png'), x: 0, speed: 1.5 }
 		];
 		this.playerImage = loadImage('assets/player-run.gif');
+		this.playerIdleImage = loadImage('assets/player-idle.gif');
 		this.itemImages = [
 			{ src: loadImage('assets/pizza.png'), name: 'pizza', health: 15, score: 0, life: 0, width: 3072/60, height: 3072/60 },
 			{ src: loadImage('assets/pizza.png'), name: 'pizza', health: 15, score: 0, life: 0, width: 3072/60, height: 3072/60 },
@@ -66,7 +43,6 @@ class Game {
 		this.bulletImage = loadImage('assets/boss-bullet.png');
 		this.playerRifleImage = loadImage('assets/player-rifle.gif');
 
-		//this.music = createAudio('assets/music.wav');
 		this.backgroundMusic = new Audio('assets/sound/music.mp3'); // or music.wav (which is another song)
 		this.coffeeEffect = new Audio('assets/sound/coffee.wav');
 		this.deathEffect = new Audio('assets/sound/death.wav'); // or death2.wav (another effect)
@@ -80,6 +56,32 @@ class Game {
 		this.bossShootEffect = new Audio('assets/sound/shoot-boss.wav');
 		this.playerShootEffect = new Audio('assets/sound/shoot-player.wav');
 		this.youWinEffect = new Audio('assets/sound/youwin.wav');
+	}
+
+	setup() {
+		this.player = new Player();
+		this.background = new Background();
+		this.barrel = new Barrel(700);
+		this.boss = new Boss;
+		this.bulletsBoss = [];
+		this.bulletsPlayer = [];
+		this.items = [];
+		this.saws = [];
+		this.levelElement = document.getElementById('level');
+		this.livesElement = document.getElementById('lives');
+		this.healthElement = document.getElementById('health');
+		this.scoreElement = document.getElementById('score');
+		this.timeElement = document.getElementById('time');
+		this.level = 1;
+		this.lives = 3;
+		this.health = 100;
+		this.score = 0;
+		this.time = 60;
+		this.frames = 100;
+		this.currentBossImage = this.bossImage;
+		this.backgroundMusic.loop = true;
+		this.isSound = true;
+		this.backgroundMusic.play();
 	}
 
 	draw() {
@@ -105,8 +107,7 @@ class Game {
 				this.player.rifleX = this.player.x + this.player.width + this.player.rifleDistX; // rifle needs to move together with the player
 				document.getElementById('div-level').innerHTML = '<h2>FINAL STAGE</h2>';
 				document.getElementById('h2-time').innerHTML = `Boss health: <span id="boss-health">${this.boss.health}</span>`;
-				//document.getElementById('time').textContent = this.boss.health;
-				this.playerImage = loadImage('assets/player-idle.gif');
+				this.playerImage = this.playerIdleImage;
 			}
 		}
 		else this.gameOn(); // player is playing the current level

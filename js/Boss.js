@@ -23,8 +23,6 @@ class Boss {
 			this.x = width - this.width - 50;
 			this.y = height - this.height;
 			image(game.currentBossImage, this.x, this.y, this.width, this.height);
-			//image(game.deadBossImage, this.x - 50, this.y, 63, 23);
-			//game.gameOver();
 		}
 	}
 }

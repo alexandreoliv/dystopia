@@ -14,11 +14,11 @@ class Barrel {
 		if (this.x + this.width < 0) this.x = width;
 	}
 
-	// collision() {
-	// 	// if distance between barrel and player is 0, there's a collision
-	// 	if ((this.x - (game.player.x + game.player.width) <= 1.5) && (game.player.y + game.player.height > this.y)) {
-	// 		// console.log('Collision with barrel at position' + this.x);
-	// 		game.player.x -= 1.5;
-	// 	}
-	// }
+	collision() {
+		if ((this.x - (game.player.x + game.player.width) < 1.5) && // player is approaching barrel
+			(this.x - (game.player.x + game.player.width) > 0) && // player is after barrel
+			(game.player.y + game.player.height >= this.y)) // player is not completely above barrel
+			return true;
+		return false;
+	}
 }

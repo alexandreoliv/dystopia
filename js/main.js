@@ -1,5 +1,5 @@
 const game = new Game();
-let isSound = false;
+let isSound = true;
 
 function preload() {
 	game.preload();
@@ -15,7 +15,7 @@ function draw() {
 }
 
 function keyPressed() {
-	if (keyCode === 32) {
+	if (keyCode === 32) { // space bar
 		// jump
 		game.player.jump();
 	}
@@ -30,13 +30,12 @@ function keyPressed() {
 		}
 	}
 
-	if (keyCode === 17) {
-		if (game.level === 5 && game.lives > 0 && game.boss.health > 0) // Ctrl / Strg key
+	if (keyCode === 17) { // Ctrl / Strg key
+		if (game.level === 5 && game.lives > 0 && game.boss.health > 0)
 			game.player.playerShooting(); // player is shooting
 	}
 
 	if (keyCode === 83) { // s key
-		//this.music.play();
 		console.log(isSound)
 		if (isSound) {
 			game.backgroundMusic.pause();
