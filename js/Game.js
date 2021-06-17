@@ -182,10 +182,12 @@ class Game {
 			// console.log(this.saws)
 		}
 		
-		if (frameCount % 100 === 0) { // time decreases ----------- show be frameCounter % 100 when the game is ready
+		if (frameCount % 73 === 0) { // time decreases ----------- show be frameCounter % 100 when the game is ready
 			this.time -= 1;
 			this.timeElement.textContent = this.time;
 		}
+
+		//setInterval()
 
 		// draws each item on the canvas
 		this.items.forEach(function (item) {
