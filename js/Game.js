@@ -83,8 +83,6 @@ class Game {
 
 	reset() {
 		console.log("Game has been reset");
-		// console.log("Level before reset: " + this.level);
-		
 		this.player = new Player();
 		this.background = new Background();
 		this.barrel = new Barrel(700);
@@ -98,27 +96,25 @@ class Game {
 		this.time = 30;
 		this.frames = 100;
 
-		// console.log("Level after reset: " + this.level);
+		console.log("Before: " + document.getElementById('header').innerHTML);
+		document.getElementById('header').innerHTML = `
+			<h2>Dystopia</h2>
+			<div id="div-level">
+				<h3>LEVEL <span id="level">1</span></h3>
+			</div>
+			<div id="info">
+				<h3>Lives: <span id="lives">3</span></h3>
+				<h3>Health: <span id="health">100</span></h3>
+				<h3>Score: <span id="score">0</span></h3>
+				<h3 id="h3-time">Time: <span id="time">30</span>
+			</div>`;
+		console.log("After: " + document.getElementById('header').innerHTML);
 
-		// console.log("Before: " + document.getElementsByClassName('body').innerHTML);
-		// document.getElementsByClassName('body').innerHTML = `
-		// <h2>Dystopia</h2>
-		// <div id="div-level">
-      	// 	<h3>LEVEL <span id="level">1</span></h3>
-    	// </div>
-    	// <div id="info">
-      	// 	<h3>Lives: <span id="lives">3</span></h3>
-      	// 	<h3>Health: <span id="health">100</span></h3>
-      	// 	<h3>Score: <span id="score">0</span></h3>
-      	// 	<h3 id="h3-time">Time: <span id="time">30</span>
-    	// </div>`;
-		// console.log("After: " + document.getElementsByClassName('body').innerHTML);
-
-		this.scoreElement.textContent = this.player.score;
-		this.healthElement.textContent = this.player.health;
-		this.livesElement.textContent = this.player.lives;
-		this.levelElement.textContent = this.level;
-		this.timeElement.textContent = this.time;
+		this.levelElement = document.getElementById('level');
+		this.livesElement = document.getElementById('lives');
+		this.healthElement = document.getElementById('health');
+		this.scoreElement = document.getElementById('score');
+		this.timeElement = document.getElementById('time');
 		this.backgroundMusic.currentTime = 0; // restarts music
 		this.playerImage = this.playerRunImage;
 		this.currentBossImage = this.bossImage;

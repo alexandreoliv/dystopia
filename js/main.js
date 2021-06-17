@@ -22,15 +22,16 @@ function draw() {
 		game.draw();
 	}
 
-	if (start === 2) {
+	if (start === 2) { // game has finished (either gameover or youwin)
 		game.reset();
-		image(background, 0, 0, width, height);
 		start = 0;
 	}
 }
 
 function keyPressed() {
 	if (keyCode === ENTER) { // enter key
+		game.gameOverEffect.pause(); // if you restart quickly after you win or lose the game, you need to cut the previous sound effect
+		game.youWinEffect.pause(); // if you restart quickly after you win or lose the game, you need to cut the previous sound effect
 		start = 1;
 		isMusic = true;
 	}
@@ -56,7 +57,7 @@ function keyPressed() {
 	}
 
 	if (keyCode === 32) { // space bar
-		if (!pause) // if game is not paused
+		if (!pause && start === 1) // if game is not paused
 			game.player.jump();
 	}
 
