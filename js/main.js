@@ -39,13 +39,16 @@ function keyPressed() {
 	}
 
 	if (keyCode === 82 && start === 1) { // r key
-		game.reset();
-		start = 0;
-		isMusic = false;
+		if (!pause) {
+			game.reset();
+			start = 0;
+			isMusic = false;
+		}
 	}
 
 	if (keyCode === 68 && start === 1) { // d key
-		game.player.lives = 0; // kills the player
+		if (!pause)
+			game.player.lives = 0; // kills the player
 	}
 	
 	if (keyCode === 80 && start === 1) { // p key
@@ -79,14 +82,14 @@ function keyPressed() {
 		}
 	}
 
-	if (keyCode === 17) { // ctrl / strg key
+	if (keyCode === 17 && start === 1) { // ctrl / strg key
 		if (!pause) { // if game is not paused
 			if (game.level === 5 && game.player.lives > 0 && game.boss.health > 0)
 				game.player.playerShooting(); // player is shooting
 		}
 	}
 
-	if (keyCode === 83) { // s key
+	if (keyCode === 83 && start === 1) { // s key
 		if (!pause) { // if game is not paused
 			//console.log("Was there sound? " + isMusic)
 			if (isMusic && start === 1) {
