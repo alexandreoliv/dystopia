@@ -12,7 +12,6 @@ class Item {
 	}
 
 	collision(playerInfo) {
-		// console.log('collision', playerInfo);
 		// the center of the item
 		const itemX = this.x + this.width / 2;
 		const itemY = this.y + this.height / 2;

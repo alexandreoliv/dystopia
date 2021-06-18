@@ -301,11 +301,6 @@ class Game {
 
 		document.getElementById('buttons').innerHTML = 'shoot: <span>ctrl</span> | jump: <span>space bar</span> | move: <span>⬅/➡</span>';
 
-		if (frameCount % 10 === 0) { // time decreases ----------- show be frameCounter % 100 when the game is ready
-			this.time -= 1;
-			this.timeElement.textContent = this.time;
-		}
-
 		if (this.player.health <= 0) { // player died by lack of health
 			this.player.lives--; // one life is lost
 			if (this.player.lives > 0) this.deathEffect.play(); // if the last life is lost there's no sound effect because it's also game over
@@ -334,8 +329,6 @@ class Game {
 
 		// in case there's a collision, removes the bullet from the boss from the screen
 		this.bulletsBoss = this.bulletsBoss.filter(bullet => {
-			// let isCollision = saw.collision(this.player);
-			// if (isCollision) console.log(`collision with saw`);
 			if (bullet.collision(this.player)) { // there's a collision
 				this.player.health -= 50;
 				this.healthElement.textContent = this.player.health;
@@ -348,8 +341,6 @@ class Game {
 
 		// in case there's a collision, removes the bullet from the player from the screen
 		this.bulletsPlayer = this.bulletsPlayer.filter(bullet => {
-			// let isCollision = saw.collision(this.player);
-			// if (isCollision) console.log(`collision with saw`);
 			if (bullet.collision(this.boss)) { // there's a collision
 				//console.log('Bullet has hit the boss');
 				this.boss.health -= 1;

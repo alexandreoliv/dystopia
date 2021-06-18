@@ -9,7 +9,6 @@ class Bullet {
 	}
 
 	collision(person) {
-		// console.log('collision', playerInfo);
 		// the center of the saw
 		const bulletX = this.x + this.width / 2;
 		const bulletY = this.y + this.height / 2;
