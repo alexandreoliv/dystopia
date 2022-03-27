@@ -102,7 +102,7 @@ The code reflects my level of knowledge by the time it was built (during the thi
 
 <p></p>
 
-3. On top of the screen the most important information is displayed: lives | health | score | boss
+3. On top of the screen the most important information is displayed: level | lives | health | score | boss
 
 <p></p>
 
